@@ -1,0 +1,55 @@
+#: import ScreenManager kivy.uix.screenmanager.ScreenManager
+#: import Screen kivy.uix.screenmanager.ScreenManager
+#: import NewGameScreen screen
+#: import LoadGameScreen screen
+
+ScreenManager:
+    id: screen_manager
+    transition: NoTransition()
+    WelcomeScreen:
+        id: welcome_screen
+        name: 'welcome'
+        manager: 'screen_manager'
+    EncoderScreen:
+        id: encode_screen
+        name: 'encode'
+        manager: 'screen_manager'
+    DecoderScreen:
+        id: decode_screen
+        name: 'decode'
+        manager: 'screen_manager'
+    TrainingMenuScreen:
+        id: training_screen
+        name: 'training'
+        manager: 'screen_manager'
+    ListeningScreen:
+        id: listening_screen
+        name: 'listening'
+        manager: 'screen_manager'
+    TappingScreen:
+        id: tapping_screen
+        name: 'tapping'
+        manager: 'screen_manager'
+    CalibrationScreen:
+        id: loadgame_screen
+        name: 'calibration'
+        manager: 'screen_manager'
+
+<MainBox>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'ASCII Life'
+            font_size: 50
+        Button:
+            text: 'New Game'
+            font_size: 30
+            on_release: app.root.current = 'newgame'
+        Button:
+            text: 'Load Game'
+            font_size: 30
+            on_release: app.root.current = 'loadgame'
+        Button:
+            text: 'Settings'
+            font_size: 30
+            on_release: app.root.current = 'something'
