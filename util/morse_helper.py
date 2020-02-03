@@ -55,7 +55,7 @@ class MorseHelper:
 
     def morse_to_text(self, morse_code):
         text = ''
-        morse_words = [word for word in morse_code.split('/') if word != '']
+        morse_words = [word.strip() for word in morse_code.split('/') if word.strip() != '']
         for morse_word in morse_words:
             for morse_letter in morse_word.split(' '):
                 if morse_letter in self.__morse_to_letter:

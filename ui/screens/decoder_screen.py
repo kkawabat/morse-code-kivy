@@ -60,13 +60,6 @@ class DecoderScreen(Screen):
         self.decode_output_label.theme_text_color = 'Custom'
         self.decode_output_label.text_color = [1, 1, 1, 1]
 
-        # if platform not in ['ios', 'android']:
-        #     self.audio_indicator = AudioIndicator(stack_width=self.amr.bits_per_frame)
-        # else:
-        #     self.audio_indicator = AudioIndicator(stack_width=40)
-        # self.audio_indicator.size_hint = (1, 2)
-        # decode_card.add_widget(self.audio_indicator)
-
         decode_card.add_widget(self.decode_output_label)
         decode_card.add_widget(self.decode_input)
         decode_card.md_bg_color = App.get_running_app().theme_cls.accent_color
@@ -77,30 +70,33 @@ class DecoderScreen(Screen):
 
     def clear_text(self):
         self.decode_input.text = ''
+        self.decode_output_label.text = ''
 
     def decode_audio(self):
         if self.record_button.md_bg_color == App.get_running_app().theme_cls.primary_color:
             self.record_button.md_bg_color = App.get_running_app().theme_cls.error_color
-            self.decode_output_label.text = 'Recording Started'
-            print("Start audio recording thread")
+            self.decode_output_label.text = ''
             self.amr.start()
             Clock.schedule_interval(self.update_amr, self.amr.frame_rate)
 
         else:
-            self.decode_output_label.text = 'Recording Stopped'
-            print("Stopped audio recording thread")
+            self.decode_output_label.text = ''
             self.record_button.md_bg_color = App.get_running_app().theme_cls.primary_color
             Clock.unschedule(self.update_amr)
             self.amr.stop()
             self.clear_text()
 
     def update_amr(self, kargs):
-        print(kargs)
-        morse_code, bit_signal = self.amr.update()
-        self.update_text(morse_code)
+        morse_code_segment, bit_signal = self.amr.update()
+        self.update_morse(morse_code_segment)
+        self.update_text_display(self.decode_input.text)
 
-    def update_text(self, morse_code):
-        self.decode_input.text = self.decode_input.text + ''.join(morse_code)
+    def update_morse(self, morse_code_segment):
+        self.decode_input.text = self.decode_input.text + ''.join(morse_code_segment)
+
+    def update_text_display(self, morse_code):
+        user_input = self.util.morse_helper.morse_to_text(morse_code)
+        self.decode_output_label.text = user_input
 
     def return_home(self):
         self.manager.current = 'welcome'

@@ -27,11 +27,10 @@ WORD_END_DURATION_THRESHOLD_BIT = int(WORD_END_DURATION_THRESHOLD_SEC * NUM_BITS
 
 
 class AutoMorseRecognizer:
-    def __init__(self, debug=False, debug_plot=False, active_threshold=15):
+    def __init__(self, debug=False, active_threshold=15):
         self.debug = debug
-        self.debug_plot = debug_plot
         self.active_threshold = active_threshold
-        self.old_buffer = None
+        self.old_buffer = []
         if not IS_MOBILE:
             self.pa = PyAudio()
             self.stream = None

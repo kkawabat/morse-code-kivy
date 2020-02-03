@@ -45,10 +45,10 @@ training_prompt_dict = {
 
 class Utility(object):
     def __init__(self):
-        self.calibration = 0.5
+        self.calibration = 17
 
         # used in training screens
         self.morse_helper = MorseHelper()
         self.training_prompt_dict = training_prompt_dict
         self.training_difficulty = ''
-        self.auto_morse_recognizer = AutoMorseRecognizer(active_threshold=self.calibration)
+        self.auto_morse_recognizer = AutoMorseRecognizer(active_threshold=self.calibration, debug=True)
