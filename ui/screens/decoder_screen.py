@@ -13,8 +13,8 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextFieldRound
 
 # project imports
-from ui.widgets.audio_indicator import AudioIndicator
-from ui.widgets.nav_drawer import MyNavigationLayout
+# from ui.widgets.audio_indicator import AudioIndicator
+# from ui.widgets.nav_drawer import MyNavigationLayout
 
 
 class DecoderScreen(Screen):
@@ -59,13 +59,14 @@ class DecoderScreen(Screen):
                                            halign='center', size_hint=(1, 0.5))
         self.decode_output_label.theme_text_color = 'Custom'
         self.decode_output_label.text_color = [1, 1, 1, 1]
-        if platform not in ['ios', 'android']:
-            self.audio_indicator = AudioIndicator(stack_width=self.amr.bits_per_frame)
-        else:
-            self.audio_indicator = AudioIndicator(stack_width=40)
-        self.audio_indicator.size_hint = (1, 2)
 
-        decode_card.add_widget(self.audio_indicator)
+        # if platform not in ['ios', 'android']:
+        #     self.audio_indicator = AudioIndicator(stack_width=self.amr.bits_per_frame)
+        # else:
+        #     self.audio_indicator = AudioIndicator(stack_width=40)
+        # self.audio_indicator.size_hint = (1, 2)
+        # decode_card.add_widget(self.audio_indicator)
+
         decode_card.add_widget(self.decode_output_label)
         decode_card.add_widget(self.decode_input)
         decode_card.md_bg_color = App.get_running_app().theme_cls.accent_color
@@ -73,18 +74,6 @@ class DecoderScreen(Screen):
 
         self.add_widget(decode_card)
         self.add_widget(record_button_anchor)
-
-        # Nav Bar
-        self.nav_bar = MyNavigationLayout()
-        self.nav_bar_anchor = AnchorLayout(anchor_x='center', anchor_y='top')
-        self.nav_bar_anchor.add_widget(self.nav_bar)
-        self.add_widget(self.nav_bar_anchor)
-
-    def update_audio_indicator(self, dt):
-        if hasattr(self.audio_indicator, 'stack_width'):
-            level_array = [self.audio_indicator.stack_height + 1 if bit == 0 else 0 for bit in
-                           dt[-self.audio_indicator.stack_width:]]
-            self.audio_indicator.set_levels(level_array)
 
     def clear_text(self):
         self.decode_input.text = ''
@@ -108,7 +97,6 @@ class DecoderScreen(Screen):
     def update_amr(self, kargs):
         print(kargs)
         morse_code, bit_signal = self.amr.update()
-        self.update_audio_indicator(bit_signal)
         self.update_text(morse_code)
 
     def update_text(self, morse_code):

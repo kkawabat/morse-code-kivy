@@ -3,6 +3,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.lang import Builder
+from kivymd.app import MDApp
 from kivy.app import App
 # Project imports
 from ui.widgets.nav_drawer import MyNavigationLayout
@@ -109,13 +110,6 @@ class WelcomeScreen(Screen):
     def __init__(self, **kwargs):
         super(WelcomeScreen, self).__init__(name=kwargs.get('name'))
         self.util = kwargs.get('util')
-        self.nav_bar = MyNavigationLayout()
-        self.nav_bar.toolbar.text_color = App.get_running_app().theme_cls.primary_color
-        self.nav_bar.toolbar.md_bg_color = 0, 0, 0, 0
-        self.nav_bar_anchor = AnchorLayout(anchor_x='center', anchor_y='top')
-        self.nav_bar_anchor.add_widget(self.nav_bar)
-        self.add_widget(self.nav_bar_anchor)
-
         Clock.schedule_once(self.texture_init, 0)
         Clock.schedule_interval(self.scroll_texture, 1 / 60.)
 

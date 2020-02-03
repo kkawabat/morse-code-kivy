@@ -67,8 +67,8 @@ Builder.load_string('''
 #:import MDRectangleFlatIconButton kivymd.uix.button
 #:import MDFloatingActionButton kivymd.uix.button
 #:import MDLabel kivymd.uix.label
-#:import AudioIndicator ui.widgets.audio_indicator.AudioIndicator
-#:import WelcomeButton ui.widgets.welcome_button
+# # :import AudioIndicator ui.widgets.audio_indicator.AudioIndicator
+# :import WelcomeButton ui.widgets.welcome_button
 
 <ListeningScreen>
     user_text_field: user_text_field

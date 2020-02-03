@@ -13,8 +13,8 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextFieldRound
 
 # Project imports
-from ui.widgets.audio_indicator import AudioIndicator
-from ui.widgets.nav_drawer import MyNavigationLayout
+# from ui.widgets.audio_indicator import AudioIndicator
+# from ui.widgets.nav_drawer import MyNavigationLayout
 
 # Speech to text imports
 try:
@@ -68,12 +68,12 @@ class EncoderScreen(Screen):
         self.encode_output_label.theme_text_color = 'Custom'
         self.encode_output_label.text_color = [1, 1, 1, 1]
 
-        self.audio_indicator = AudioIndicator()
-        self.audio_indicator.size_hint = (1, 2)
-        Clock.schedule_interval(self.update_audio_indicator, 0.1)
+        # self.audio_indicator = AudioIndicator()
+        # self.audio_indicator.size_hint = (1, 2)
+        # Clock.schedule_interval(self.update_audio_indicator, 0.1)
+        # encode_card.add_widget(self.audio_indicator)
 
         encode_card.add_widget(encode_label)
-        encode_card.add_widget(self.audio_indicator)
         encode_card.add_widget(self.encode_output_label)
         encode_card.add_widget(self.encode_input)
         encode_card.md_bg_color = App.get_running_app().theme_cls.accent_color
@@ -81,12 +81,6 @@ class EncoderScreen(Screen):
 
         self.add_widget(encode_card)
         self.add_widget(play_button_anchor)
-
-        # Nav Bar
-        self.nav_bar = MyNavigationLayout()
-        self.nav_bar_anchor = AnchorLayout(anchor_x='center', anchor_y='top')
-        self.nav_bar_anchor.add_widget(self.nav_bar)
-        self.add_widget(self.nav_bar_anchor)
 
         self.cur_sound_index = 0
         self.sound_list = []

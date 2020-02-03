@@ -2,7 +2,7 @@
 # Kivy Imports
 import gc
 
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import NoTransition
@@ -24,7 +24,7 @@ gc.disable()
 
 class MainBox(FloatLayout):
     def __init__(self, **kwargs):
-        super(MainBox, self).__init__()
+        super().__init__()
         self.screens = AnchorLayout(anchor_x='center', anchor_y='center')
         self.util = kwargs.get('util')
         self.content = ScreenManager()
@@ -42,19 +42,28 @@ class MainBox(FloatLayout):
         self.add_widget(self.screens)
 
 
-class MainApp(App):
-    util = Utility()
-    # Change APP colors here
-    theme_cls = ThemeManager()
-    theme_cls.primary_palette = 'Teal'
-    theme_cls.primary_hue = '300'
-    theme_cls.accent_palette = 'Gray'
-    theme_cls.accent_hue = '800'
-    theme_cls.theme_style = 'Dark'
-    accent_color = [255/255, 64/255, 129/255, 1]
+class MainApp(MDApp):
+    def __init__(self, **kwargs):
+        self.theme_cls.primary_palette = 'Teal'
+        self.theme_cls.primary_hue = '300'
+        self.theme_cls.accent_palette = 'Gray'
+        self.theme_cls.accent_hue = '800'
+        self.theme_cls.theme_style = 'Dark'
+        self.accent_color = [255 / 255, 64 / 255, 129 / 255, 1]
+        self.util = Utility()
+        super().__init__(**kwargs)
 
     def build(self):
         return MainBox(util=self.util)
+
+    def on_start(self):
+        pass
+        # self.nav_bar = MyNavigationLayout()
+        # self.nav_bar.toolbar.text_color = App.get_running_app().theme_cls.primary_color
+        # self.nav_bar.toolbar.md_bg_color = 0, 0, 0, 0
+        # self.nav_bar_anchor = AnchorLayout(anchor_x='center', anchor_y='top')
+        # self.nav_bar_anchor.add_widget(self.nav_bar)
+        # self.add_widget(self.nav_bar_anchor)
 
 
 if __name__ == "__main__":

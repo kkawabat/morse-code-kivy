@@ -1,3 +1,4 @@
-kivymd=0.100.2
+kivymd
 Kivy==1.11.0
 requests
+
