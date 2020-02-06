@@ -19,10 +19,9 @@ from kivymd.uix.textfield import MDTextFieldRound
 
 class DecoderScreen(Screen):
     def __init__(self, **kwargs):
-        super(DecoderScreen, self).__init__(name=kwargs.get('name'))
-        self.util = kwargs.get('util')
+        super(DecoderScreen, self).__init__(**kwargs)
         if platform not in ['ios', 'android']:
-            self.amr = self.util.auto_morse_recognizer
+            self.amr = App.get_running_app().util.auto_morse_recognizer
         self.ui_layout()
 
     def ui_layout(self):
@@ -36,7 +35,7 @@ class DecoderScreen(Screen):
             self.record_button.bind(on_press=lambda x: self.decode_audio())
         record_button_anchor.add_widget(self.record_button)
 
-        self.decode_input = MDTextFieldRound(pos_hint={'center_x': 0.5, 'center_y': 0.5},
+        self.decode_input = MDTextFieldRound(pos_hint={'center_x': 0.5, 'center_y': 0.5}, font_size=20, normal_color=[1,1,1,.2],
                                              size_hint=(0.85, 0.5))
         self.decode_input.icon_left_dasabled = True
         # Moves widget out of the field of view
@@ -55,7 +54,7 @@ class DecoderScreen(Screen):
         decode_card.add_widget(decode_label)
 
         decode_text = 'Hit record or enter Morse Code below to start decoding'
-        self.decode_output_label = MDLabel(text=decode_text, font_style='Body1',
+        self.decode_output_label = MDLabel(text=decode_text, font_style='H5',
                                            halign='center', size_hint=(1, 0.5))
         self.decode_output_label.theme_text_color = 'Custom'
         self.decode_output_label.text_color = [1, 1, 1, 1]

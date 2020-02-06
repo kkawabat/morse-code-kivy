@@ -1,0 +1,87 @@
+#:import IconLeftWidget kivymd.uix.list.IconLeftWidget
+#:import WelcomeScreen ui.screens.welcome_screen
+#:import DecoderScreen ui.screens.decoder_screen
+
+<NavigationItem>
+    theme_text_color: 'Custom'
+    divider: None
+
+    IconLeftWidget:
+        icon: root.icon
+
+
+<ContentNavigationDrawer>
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        FloatLayout:
+            size_hint_y: None
+            height: "200dp"
+
+            canvas:
+                Color:
+                    rgb: 2/255, 2/255, 2/255
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                id: top_box
+                size_hint_y: None
+                size_hint_x: 1
+                height: "200dp"
+                #padding: "10dp"
+                x: root.parent.x
+                pos_hint: {"top": 1}
+
+                Image:
+                    size_hint_x: 1
+                    source: "ui\img\morse_code_icon.png"
+
+            MDIconButton:
+                icon: "close-circle"
+                x: root.parent.x + dp(10)
+                pos_hint: {"top": 1}
+                on_release: root.parent.toggle_nav_drawer()
+
+        ScrollView:
+            pos_hint: {"top": 1}
+
+            GridLayout:
+                id: box_item
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+
+Screen:
+
+    NavigationLayout:
+
+        ScreenManager:
+
+            WelcomeScreen:
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Navigation Drawer"
+                        md_bg_color: app.theme_cls.primary_color
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
+
+            DecoderScreen:
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Navigation Drawer"
+                        md_bg_color: app.theme_cls.primary_color
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
+
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                id: content_drawer

@@ -1,12 +1,9 @@
+from kivy.clock import Clock
+from kivy.lang import Builder
 from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.screenmanager import Screen
-from kivy.clock import Clock
-from kivy.uix.anchorlayout import AnchorLayout
-from kivy.lang import Builder
-from kivymd.app import MDApp
-from kivy.app import App
+
 # Project imports
-from ui.widgets.nav_drawer import MyNavigationLayout
 
 
 Builder.load_string("""

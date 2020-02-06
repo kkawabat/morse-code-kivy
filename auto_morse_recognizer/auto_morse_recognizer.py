@@ -136,4 +136,4 @@ class AutoMorseRecognizer:
 
 
 if __name__ == "__main__":
-    ms = AutoMorseRecognizer(debug=False, debug_plot=False)
+    ms = AutoMorseRecognizer(debug=True)

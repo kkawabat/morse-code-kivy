@@ -71,9 +71,6 @@ KV = '''
                 cols: 1
                 size_hint_y: None
                 height: self.minimum_height
-
-
-
 '''
 Builder.load_string(KV)
 
