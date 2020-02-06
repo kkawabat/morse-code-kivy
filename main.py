@@ -2,12 +2,11 @@
 # Kivy Imports
 import gc
 
-from kivymd.app import MDApp
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import NoTransition
 from kivy.uix.screenmanager import ScreenManager
-from kivymd.theming import ThemeManager
+from kivymd.app import MDApp
 
 from ui.screens.calibration_screen import CalibrationScreen
 from ui.screens.decoder_screen import DecoderScreen
@@ -49,7 +48,7 @@ class MainApp(MDApp):
         self.theme_cls.accent_palette = 'Gray'
         self.theme_cls.accent_hue = '800'
         self.theme_cls.theme_style = 'Dark'
-        self.accent_color = [255 / 255, 64 / 255, 129 / 255, 1]
+        self.accent_color = [1, .25, .5, 1]
         self.util = Utility()
         super().__init__(**kwargs)
 

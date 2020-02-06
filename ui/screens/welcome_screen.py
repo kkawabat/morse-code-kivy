@@ -14,6 +14,7 @@ Builder.load_string("""
 #:import MDToolbar kivymd.uix.toolbar
 #:import MDRectangleFlatIconButton kivymd.uix.button
 #:import MDLabel kivymd.uix.label
+#:import WelcomButton ui.widgets.welcome_button
 
 <WelcomeButton>
     elevation_normal: 10
@@ -108,8 +109,7 @@ class WelcomeScreen(Screen):
     tex_coords = ListProperty([0, 0, 1, 0, 1, 1, 0, 1])
 
     def __init__(self, **kwargs):
-        super(WelcomeScreen, self).__init__(name=kwargs.get('name'))
-        self.util = kwargs.get('util')
+        super().__init__(**kwargs)
         Clock.schedule_once(self.texture_init, 0)
         Clock.schedule_interval(self.scroll_texture, 1 / 60.)
 
