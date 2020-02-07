@@ -1,0 +1,23 @@
+#:import MDCard kivymd.uix.card
+#:import MDToolbar kivymd.uix.toolbar
+#:import MDRectangleFlatIconButton kivymd.uix.button
+#:import MDLabel kivymd.uix.label
+#:import DefaultButton ui.widgets.default_button
+
+<DefaultScreen>
+    canvas.before:
+        Rectangle:
+            id: scroll_bg
+            pos: self.pos
+            size: self.size
+            source: 'ui\img\morse_code_bg.jpg'
+            tex_coords: root.tex_coords
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'top'
+        MDToolbar:
+            title: "Navigation Drawer"
+            md_bg_color: app.theme_cls.primary_color
+            elevation: 10
+            left_action_items: [['menu', lambda x: app.root.ids.nav_drawer.toggle_nav_drawer()]]

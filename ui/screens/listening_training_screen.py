@@ -9,6 +9,8 @@ from kivy.properties import StringProperty, ObjectProperty
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
 
+from ui.screens.default_screen import DefaultScreen
+
 
 class LongpressButton(Button):
     __events__ = ('on_long_press', 'on_short_press', 'on_long_pause', 'on_short_pause')
@@ -68,7 +70,7 @@ Builder.load_string('''
 #:import MDFloatingActionButton kivymd.uix.button
 #:import MDLabel kivymd.uix.label
 # # :import AudioIndicator ui.widgets.audio_indicator.AudioIndicator
-# :import WelcomeButton ui.widgets.welcome_button
+# :import DefaultButton ui.widgets.default_button
 
 <ListeningScreen>
     user_text_field: user_text_field
@@ -149,7 +151,7 @@ Builder.load_string('''
 ''')
 
 
-class ListeningScreen(Screen):
+class ListeningScreen(DefaultScreen):
     prompt = StringProperty("")
     user_text_field = ObjectProperty(None)
     decode_output_label = ObjectProperty(None)
@@ -157,8 +159,7 @@ class ListeningScreen(Screen):
     play_button = ObjectProperty(None)
 
     def __init__(self, **kwargs):
-        super(ListeningScreen, self).__init__(name=kwargs.get('name'))
-        self.util = kwargs.get('util')
+        super().__init__(**kwargs)
 
     def on_enter(self):
         Clock.schedule_once(self.init_listening_screen, 0)

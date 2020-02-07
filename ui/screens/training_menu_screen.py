@@ -3,6 +3,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from kivy.lang import Builder
 
+from ui.screens.default_screen import DefaultScreen
 
 Builder.load_string('''
 #:import MDCard kivymd.uix.card
@@ -10,7 +11,7 @@ Builder.load_string('''
 #:import MDFloatingActionButton kivymd.uix.button
 #:import MDLabel kivymd.uix.label
 # #:import AudioIndicator ui.widgets.audio_indicator.AudioIndicator
-#:import WelcomeButton ui.widgets.welcome_button
+#:import DefaultButton ui.widgets.default_button
 
 
 <TrainingMenuScreen>
@@ -61,7 +62,7 @@ Builder.load_string('''
                 cols: 3
                 pos_hint: {'center_x': 0.5}
 
-                WelcomeButton:
+                DefaultButton:
                     text: 'letters'
                     icon: 'walk'
                     size_hint_x: 1
@@ -69,7 +70,7 @@ Builder.load_string('''
                         root.util.training_difficulty = "Easy"
                         root.manager.current = 'listening'
 
-                WelcomeButton:
+                DefaultButton:
                     text: 'words'
                     icon: 'run'
                     size_hint_x: 1
@@ -77,7 +78,7 @@ Builder.load_string('''
                         root.util.training_difficulty = "Medium"
                         root.manager.current = 'listening'
 
-                WelcomeButton:
+                DefaultButton:
                     text: 'sentences'
                     icon: 'bike'
                     size_hint_x: 1
@@ -98,7 +99,7 @@ Builder.load_string('''
                 cols: 3
                 pos_hint: {'center_x': 0.5}
 
-                WelcomeButton:
+                DefaultButton:
                     text: 'letters'
                     icon: 'walk'
                     size_hint_x: 1
@@ -106,7 +107,7 @@ Builder.load_string('''
                         root.util.training_difficulty = "Easy"
                         root.manager.current = 'tapping'
 
-                WelcomeButton:
+                DefaultButton:
                     text: 'words'
                     icon: 'run'
                     size_hint_x: 1
@@ -114,7 +115,7 @@ Builder.load_string('''
                         root.util.training_difficulty = "Medium"
                         root.manager.current = 'tapping'
 
-                WelcomeButton:
+                DefaultButton:
                     text: 'sentences'
                     icon: 'bike'
                     size_hint_x: 1
@@ -124,22 +125,9 @@ Builder.load_string('''
 ''')
 
 
-class TrainingMenuScreen(Screen):
-    texture = ObjectProperty(None)
-    tex_coords = ListProperty([0, 0, 1, 0, 1, 1, 0, 1])
-
+class TrainingMenuScreen(DefaultScreen):
     def __init__(self, **kwargs):
-        super(TrainingMenuScreen, self).__init__(name=kwargs.get('name'))
-        self.util = kwargs.get('util')
-        Clock.schedule_once(self.texture_init, 0)
-        Clock.schedule_interval(self.scroll_texture, 1 / 60.)
-
-    def texture_init(self, *args):
-        self.canvas.before.children[-1].texture.wrap = 'repeat'
-
-    def scroll_texture(self, dt):
-        for i in range(0, 8, 2):
-            self.tex_coords[i] += dt / 3.
+        super().__init__(**kwargs)
 
     def return_home(self):
         self.manager.current = 'welcome'

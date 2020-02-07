@@ -1,0 +1,69 @@
+#:import MDCard kivymd.uix.card
+#:import MDToolbar kivymd.uix.toolbar
+#:import MDRectangleFlatIconButton kivymd.uix.button
+#:import MDLabel kivymd.uix.label
+#:import DefaultButton ui.widgets.default_button
+
+<WelcomeScreen>
+    FloatLayout:
+        size_hint: .65, .65
+        pos_hint: {'center_x': 0.5, 'center_y': .5}
+        canvas.before:
+            Color:
+                rgba:  app.theme_cls.accent_color
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [dp(10)]
+
+        BoxLayout:
+            size_hint: .8, .8
+            orientation: 'vertical'
+            pos_hint: {'center_x': 0.5, 'center_y': .5}
+
+            Image:
+                source: 'ui\img\welcome_morse_code.png'
+                size_hint_y: .3
+                allow_stretch: True
+
+            Widget:
+                size_hint_y: .1
+
+            GridLayout:
+                spacing: dp(20)
+                cols: 2
+
+                DefaultButton:
+                    text: 'Decode'
+                    size_hint_x: 1
+                    icon: 'database-export'
+                    on_press:
+                        root.manager.current = 'decode'
+
+                DefaultButton:
+                    text: 'Encode'
+                    icon: 'database-import'
+                    size_hint_x: 1
+                    on_press:
+                        root.manager.current = 'encode'
+
+                DefaultButton:
+                    text: 'Train'
+                    icon: 'dumbbell'
+                    size_hint_x: 1
+                    on_press:
+                        root.manager.current = 'training'
+
+                DefaultButton:
+                    text: 'Calibrate'
+                    icon: 'cogs'
+                    size_hint_x: 1
+                    on_press:
+                        root.manager.current = 'calibration'
+
+                DefaultButton:
+                    text: 'Exit'
+                    icon: 'exit-to-app'
+                    size_hint_x: 1
+                    on_press: app.stop()
+

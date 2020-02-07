@@ -27,8 +27,7 @@ except ModuleNotFoundError:
 
 class EncoderScreen(Screen):
     def __init__(self, **kwargs):
-        super(EncoderScreen, self).__init__(name=kwargs.get('name'))
-        self.util = kwargs.get('util')
+        super().__init__(**kwargs)
         self.ui_layout()
 
     def ui_layout(self):
