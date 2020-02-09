@@ -10,4 +10,4 @@ class TrainingMenuScreen(DefaultScreen):
         super().__init__(**kwargs)
 
     def return_home(self):
-        self.manager.current = 'welcome'
+        self.manager.current = 'home'

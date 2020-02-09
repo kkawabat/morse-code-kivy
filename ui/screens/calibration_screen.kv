@@ -1,0 +1,33 @@
+<CalibrationScreen>
+    MDCard:
+        id: calibration_card
+        padding: dp(24)
+        spacing: dp(24)
+        orientation: 'vertical'
+        size_hint: (0.75, 0.45)
+        pos_hint: {'top': 0.75, 'center_x': 0.5}
+
+        MDLabel:
+            text: 'Calibrate Audio Input'
+            font_style: 'H4'
+            halign: 'center'
+            theme_text_color: 'Custom'
+            text_color: 1, 1, 1, 1
+
+        Slider:
+            size_hint: 0.75, None
+            pos_hint: {'center_x': 0.5}
+            on_value: root.on_value_change(self.value)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            MDLabel:
+                text: 'Less Sensitive'
+                font_style:'Caption'
+                theme_text_color: 'Custom'
+                text_color: 1, 1, 1, 1
+            MDLabel:
+                text: 'More Sensitive'
+                font_style: 'Caption'
+                theme_text_color: 'Custom'
+                text_color: 1, 1, 1, 1

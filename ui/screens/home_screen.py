@@ -2,8 +2,8 @@ from kivy.lang import Builder
 
 from ui.screens.default_screen import DefaultScreen
 
-Builder.load_file(r'ui\screens\welcome_screen.kv')
+Builder.load_file(r'ui\screens\home_screen.kv')
 
 
-class WelcomeScreen(DefaultScreen):
+class HomeScreen(DefaultScreen):
     pass

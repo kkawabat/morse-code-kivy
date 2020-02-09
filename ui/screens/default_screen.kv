@@ -1,7 +1,3 @@
-#:import MDCard kivymd.uix.card
-#:import MDToolbar kivymd.uix.toolbar
-#:import MDRectangleFlatIconButton kivymd.uix.button
-#:import MDLabel kivymd.uix.label
 #:import DefaultButton ui.widgets.default_button
 
 <DefaultScreen>
@@ -17,6 +13,7 @@
         anchor_x: 'center'
         anchor_y: 'top'
         MDToolbar:
+            id: toolbar
             title: "Navigation Drawer"
             md_bg_color: app.theme_cls.primary_color
             elevation: 10

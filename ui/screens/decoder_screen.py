@@ -43,4 +43,4 @@ class DecoderScreen(DefaultScreen):
         self.ids.decode_input.ids.box.text = 'Finished'
 
     def return_home(self):
-        self.manager.current = 'welcome'
+        self.manager.current = 'home'

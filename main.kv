@@ -1,5 +1,5 @@
 #:import IconLeftWidget kivymd.uix.list.IconLeftWidget
-#:import WelcomeScreen ui.screens.welcome_screen
+#:import HomeScreen ui.screens.home_screen
 #:import DecoderScreen ui.screens.decoder_screen
 #:import EncoderScreen ui.screens.encoder_screen
 #:import TrainingMenuScreen ui.screens.training_menu_screen
@@ -69,8 +69,8 @@ Screen:
         ScreenManager:
             id: screen_manager
 
-            WelcomeScreen:
-                name: 'welcome'
+            HomeScreen:
+                name: 'home'
 
             TrainingMenuScreen:
                 name: 'training'

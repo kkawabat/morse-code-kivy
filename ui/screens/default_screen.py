@@ -21,7 +21,7 @@ class DefaultScreen(Screen):
         Clock.schedule_interval(self.scroll_texture, 1 / 60.)
 
     def on_leave(self, *args):
-        Clock.unschedule(self.scroll_texture, 1 / 60.)
+        Clock.unschedule(self.scroll_texture)
 
     def scroll_texture(self, dt):
         for i in range(0, 8, 2):

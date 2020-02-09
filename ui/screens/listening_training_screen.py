@@ -2,6 +2,7 @@
 import random
 import time
 
+from kivy.app import App
 from kivy.clock import Clock
 from kivy.factory import Factory
 from kivy.lang import Builder
@@ -160,6 +161,7 @@ class ListeningScreen(DefaultScreen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.util = App.get_running_app().util
 
     def on_enter(self):
         Clock.schedule_once(self.init_listening_screen, 0)
@@ -243,4 +245,4 @@ class ListeningScreen(DefaultScreen):
         self.manager.current = 'training'
 
     def return_home(self):
-        self.manager.current = 'welcome'
+        self.manager.current = 'home'

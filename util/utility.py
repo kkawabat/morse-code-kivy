@@ -1,13 +1,5 @@
-import json
-import os
-from threading import Thread
-
-from kivy.app import App
-from kivy.clock import Clock
-from kivy.utils import platform
-
 from .morse_helper import MorseHelper
-from auto_morse_recognizer.auto_morse_recognizer import AutoMorseRecognizer
+from util.auto_morse_recognizer import AutoMorseRecognizer
 
 training_prompt_dict = {
     'letter': list('abcdefghijklmnopqrstuvwxyz'),

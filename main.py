@@ -28,7 +28,7 @@ class NavigationItem(OneLineAvatarListItem):
 class MainApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.theme_cls.primary_palette = 'Teal'
+        self.theme_cls.primary_palette = 'Green'
         self.theme_cls.primary_hue = '300'
         self.theme_cls.accent_palette = 'Gray'
         self.theme_cls.accent_hue = '800'
@@ -41,7 +41,7 @@ class MainApp(MDApp):
 
     def init_nav_menu(self):
         nav_item_dict = {
-            "welcome": ("home", "Home", None),
+            "home": ("home", "Home", None),
             "decode": ("text-to-speech", "Translate Morse Code", None),
             "encode": ("comment-text", "Text to Morse Code", None),
             "training": ("dumbbell", "Training", None),

@@ -2,6 +2,7 @@
 import random
 import time
 
+from kivy.app import App
 from kivy.clock import Clock
 from kivy.factory import Factory
 from kivy.lang import Builder
@@ -171,6 +172,7 @@ class TappingScreen(DefaultScreen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.util = App.get_running_app().util
 
     def on_enter(self):
         Clock.schedule_once(self.init_tapping_screen, 0)
@@ -223,4 +225,4 @@ class TappingScreen(DefaultScreen):
         self.manager.current = 'training'
 
     def return_home(self):
-        self.manager.current = 'welcome'
+        self.manager.current = 'home'
