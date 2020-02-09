@@ -6,6 +6,7 @@
 #:import TappingScreen ui.screens.tapping_training_screen
 #:import ListeningScreen ui.screens.listening_training_screen
 #:import DefaultScreen ui.screens.default_screen
+#:import CalibrationScreen ui.screens.calibration_screen
 
 
 <NavigationItem>
@@ -66,18 +67,28 @@ Screen:
     NavigationLayout:
 
         ScreenManager:
+            id: screen_manager
 
             WelcomeScreen:
-
-            DecoderScreen:
-
-            EncoderScreen:
+                name: 'welcome'
 
             TrainingMenuScreen:
+                name: 'training'
+
+            DecoderScreen:
+                name: 'decode'
+
+            EncoderScreen:
+                name: 'encode'
 
             ListeningScreen:
+                name: 'listening'
 
             TappingScreen:
+                name: 'tapping'
+
+            CalibrationScreen:
+                name: 'calibration'
 
 
         MDNavigationDrawer:

@@ -12,11 +12,12 @@ from kivymd.uix.card import MDCard
 from kivymd.uix.label import MDLabel
 from kivymd.uix.slider import Slider
 
+from ui.screens.default_screen import DefaultScreen
 
-class CalibrationScreen(Screen):
+
+class CalibrationScreen(DefaultScreen):
     def __init__(self, **kwargs):
-        super(CalibrationScreen, self).__init__(name=kwargs.get('name'))
-        self.util = kwargs.get('util')
+        super().__init__(**kwargs)
         self.ui_layout()
 
     def ui_layout(self):

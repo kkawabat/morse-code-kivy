@@ -26,23 +26,20 @@
                 size_hint_y: .3
                 allow_stretch: True
 
-            Widget:
-                size_hint_y: .1
-
-            GridLayout:
+            BoxLayout:
+                orientation: 'vertical'
                 spacing: dp(20)
-                cols: 2
 
                 DefaultButton:
-                    text: 'Decode'
+                    text: 'Translate Morse Code'
                     size_hint_x: 1
-                    icon: 'database-export'
+                    icon: 'text-to-speech'
                     on_press:
                         root.manager.current = 'decode'
 
                 DefaultButton:
-                    text: 'Encode'
-                    icon: 'database-import'
+                    text: 'Text to Morse Code'
+                    icon: 'comment-text'
                     size_hint_x: 1
                     on_press:
                         root.manager.current = 'encode'
