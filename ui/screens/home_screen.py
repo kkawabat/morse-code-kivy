@@ -6,4 +6,5 @@ Builder.load_file(r'ui\screens\home_screen.kv')
 
 
 class HomeScreen(DefaultScreen):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(title='Home', **kwargs)

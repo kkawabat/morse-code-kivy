@@ -6,61 +6,60 @@
 
 <HomeScreen>
     FloatLayout:
-        size_hint: .65, .65
-        pos_hint: {'center_x': 0.5, 'center_y': .5}
+        size_hint: 0.9, 0.75
+        pos_hint: {'center_x': 0.5, 'center_y': 0.475}
         canvas.before:
             Color:
-                rgba:  app.theme_cls.accent_color
+                rgba:  [.3,.3,.3,.8]
             RoundedRectangle:
                 size: self.size
                 pos: self.pos
                 radius: [dp(10)]
 
         BoxLayout:
-            size_hint: .8, .8
+            size_hint: .9, .9
             orientation: 'vertical'
-            pos_hint: {'center_x': 0.5, 'center_y': .5}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: dp(10)
 
-            Image:
-                source: 'ui\img\welcome_morse_code.png'
-                size_hint_y: .3
-                allow_stretch: True
+            AnchorLayout:
+                size_hint_x: 1
+                Image:
+                    source: 'ui\img\welcome_morse_code.png'
+                    allow_stretch: True
+                    keep_ratio: True
 
-            BoxLayout:
-                orientation: 'vertical'
-                spacing: dp(20)
+            DefaultButton:
+                text: 'Translate Morse Code'
+                size_hint_x: 1
+                icon: 'text-to-speech'
+                on_press:
+                    root.manager.current = 'decode'
 
-                DefaultButton:
-                    text: 'Translate Morse Code'
-                    size_hint_x: 1
-                    icon: 'text-to-speech'
-                    on_press:
-                        root.manager.current = 'decode'
+            DefaultButton:
+                text: 'Text to Morse Code'
+                icon: 'comment-text'
+                size_hint_x: 1
+                on_press:
+                    root.manager.current = 'encode'
 
-                DefaultButton:
-                    text: 'Text to Morse Code'
-                    icon: 'comment-text'
-                    size_hint_x: 1
-                    on_press:
-                        root.manager.current = 'encode'
+            DefaultButton:
+                text: 'Train'
+                icon: 'dumbbell'
+                size_hint_x: 1
+                on_press:
+                    root.manager.current = 'training'
 
-                DefaultButton:
-                    text: 'Train'
-                    icon: 'dumbbell'
-                    size_hint_x: 1
-                    on_press:
-                        root.manager.current = 'training'
+            DefaultButton:
+                text: 'Calibrate'
+                icon: 'cogs'
+                size_hint_x: 1
+                on_press:
+                    root.manager.current = 'calibration'
 
-                DefaultButton:
-                    text: 'Calibrate'
-                    icon: 'cogs'
-                    size_hint_x: 1
-                    on_press:
-                        root.manager.current = 'calibration'
-
-                DefaultButton:
-                    text: 'Exit'
-                    icon: 'exit-to-app'
-                    size_hint_x: 1
-                    on_press: app.stop()
+            DefaultButton:
+                text: 'Exit'
+                icon: 'exit-to-app'
+                size_hint_x: 1
+                on_press: app.stop()
 

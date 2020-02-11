@@ -9,7 +9,7 @@ Builder.load_file(r'ui\screens\encoder_screen.kv')
 
 class EncoderScreen(DefaultScreen):
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(title='Text To Morse Code', **kwargs)
         self.util = App.get_running_app().util
         # self.morse_player = self.util.mrose_player
         self.cur_sound_index = 0

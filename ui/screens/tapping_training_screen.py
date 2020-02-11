@@ -64,158 +64,51 @@ class LongpressButton(Button):
         pass
 
 
-Builder.load_string('''
-#:import MDCard kivymd.uix.card
-#:import MDToolbar kivymd.uix.toolbar
-#:import MDRectangleFlatIconButton kivymd.uix.button
-#:import MDFloatingActionButton kivymd.uix.button
-#:import MDLabel kivymd.uix.label
-# #:import AudioIndicator ui.widgets.audio_indicator.AudioIndicator
-#:import DefaultButton ui.widgets.default_button
-
-<TappingScreen>
-    decode_morse: decode_morse
-    decode_text: decode_text
-    tapping_prompt_label: tapping_prompt_label
-    decode_output_label: decode_output_label
-    tap_button: tap_button
-
-    AnchorLayout:
-        anchor_x: 'center'
-        anchor_y: 'top'
-
-        MDToolbar:
-            title: 'Tap Training'
-            anchor_title: 'center'
-            md_bg_color: app.theme_cls.primary_color
-            left_action_items: [["arrow-left", lambda x: root.return_menu()]]
-
-    MDCard:
-        id: decode_card
-        padding: dp(24)
-        spacing: dp(24)
-        orientation: 'vertical'
-        size_hint: 0.85, 0.7
-        pos_hint: {'top': 0.85, 'center_x': 0.5}
-        elevation: 15
-        md_bg_color: app.theme_cls.accent_color
-
-        Image:
-            size_hint: 1, 1
-            source: 'ui/img/morse_code_alphabet.png'
-
-        MDLabel:
-            id: tapping_prompt_label
-            text: root.prompt
-            font_style: 'Body1'
-            halign: 'center'
-            size_hint: 1, .05
-            theme_text_color: 'Custom'
-            text_color: [1, 1, 1, 1]
-
-        MDTextFieldRound:
-            id: decode_text
-            icon_type: 'without'
-            hint_text: 'The text of your morse will be displayed here'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            size_hint: 0.85, 0.5
-
-        MDTextFieldRound:
-            id: decode_morse
-            hint_text: 'Your morse will be displayed here'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            size_hint: 0.85, 0.5
-            icon_left: 'close-circle'
-            icon_right: 'dice-5'
-            icon_callback: root.new_prompt
-
-        MDLabel:
-            id: decode_output_label
-            text: ''
-            font_style: 'Body1'
-            halign: 'center'
-            size_hint: 1, .05
-            theme_text_color: 'Custom'
-            text_color: [1, 1, 1, 1]
-
-        BoxLayout:
-            anchor_x:'center'
-            anchor_y:'bottom'
-            padding: [dp(25), dp(25), dp(25), dp(25)]
-
-            LongpressButton:
-                id: tap_button
-                valign: 'center'
-                icon: 'record'
-                text: 'Tap Here'
-                size: [dp(56), dp(56)]
-                bg_color: app.theme_cls.primary_color
-                text_color: [1, 1, 1, 1]
-                on_short_press:  root.tapped('.')
-                on_long_press: root.tapped('-')
-                on_short_pause: root.tapped(' ')
-                on_long_pause: root.tapped('/')
-                long_press_dur : app.util.morse_helper.long_press_dur
-                short_press_dur : app.util.morse_helper.short_press_dur
-                long_pause_dur : app.util.morse_helper.long_pause_dur
-                short_pause_dur : app.util.morse_helper.short_pause_dur
-''')
+Builder.load_file(r'ui\screens\tapping_training_screen.kv')
 
 
 class TappingScreen(DefaultScreen):
     prompt = StringProperty("")
-    decode_morse = ObjectProperty(None)
-    decode_text = ObjectProperty(None)
-    decode_output_label = ObjectProperty(None)
-    tapping_prompt_label = ObjectProperty(None)
-    tap_button = ObjectProperty(None)
+    decode_morse_text = StringProperty('')
+    decode_text = StringProperty('')
+    tapping_prompt_text = StringProperty('')
+    decode_output_text = StringProperty("^-- click on the left button to clear"
+                                        " and the right button for new prompt --^")
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(title='Tapping Training', **kwargs)
         self.util = App.get_running_app().util
-
-    def on_enter(self):
-        Clock.schedule_once(self.init_tapping_screen, 0)
-
-    def init_tapping_screen(self, dt):
-        self.tapping_prompt_label = self.ids.tapping_prompt_label
-        self.decode_morse.children[2].children[2].disabled = False
-        self.decode_morse.children[2].children[2].bind(on_press=lambda x: self.clear_input())
         self.training_prompt_dict = self.util.training_prompt_dict
-        self.decode_output_label.text = "^-- click on the left button to clear" \
-                                        " and the right button for new prompt --^"
-        self.decode_text = self.ids.decode_text
 
-    def new_prompt(self, *args):
+    def icon_callbacks(self, text_input, text_btn):
         self.clear_input()
-        self.ids.decode_output_label.text = ""
-        if self.util.training_difficulty in ['Easy', 'Medium', 'Hard']:
-            if self.util.training_difficulty == 'Easy':
-                training_level = 'letter'
-            elif self.util.training_difficulty == 'Medium':
-                training_level = 'word'
+        if text_btn.icon == 'dice-5':
+            self.decode_output_text = ""
+            if self.util.training_difficulty in ['Easy', 'Medium', 'Hard']:
+                if self.util.training_difficulty == 'Easy':
+                    training_level = 'letter'
+                elif self.util.training_difficulty == 'Medium':
+                    training_level = 'word'
+                else:
+                    training_level = 'sentence'
+                self.prompt = random.choice(self.util.training_prompt_dict[training_level])
+                self.tapping_prompt_text = f"Please Tap out the {training_level}: {self.prompt}"
             else:
-                training_level = 'sentence'
-            self.prompt = random.choice(self.util.training_prompt_dict[training_level])
-            self.tapping_prompt_label.text = f"Please Tap out the {training_level}: {self.prompt}"
-        else:
-            print(f"failed to load {self.util.training_difficulty}")
+                print(f"failed to load {self.util.training_difficulty}")
 
     def update_text_display(self):
-        user_input = self.util.morse_helper.morse_to_text(self.decode_morse.text)
-        self.decode_text.text = user_input
-        if self.prompt == user_input:
-            self.ids.decode_output_label.text = "You got it! click dice icon to do next"
+        self.decode_text = self.util.morse_helper.morse_to_text(self.decode_morse_text)
+        if self.prompt == self.decode_text:
+            self.decode_output_text = "You got it! click dice icon to do next"
 
     def update_morse_display(self, morse_code):
-        self.decode_morse.text = self.decode_morse.text + ''.join(morse_code)
+        self.decode_morse_text = self.decode_morse_text + ''.join(morse_code)
         self.update_text_display()
 
     def clear_input(self):
-
-        self.decode_morse.text = ''
-        self.decode_text.text = ''
-        self.ids.decode_output_label.text = ""
+        self.decode_morse_text = ''
+        self.decode_text = ''
+        self.decode_output_text = ''
 
     def tapped(self, morse_char):
         print(morse_char)
@@ -225,4 +118,4 @@ class TappingScreen(DefaultScreen):
         self.manager.current = 'training'
 
     def return_home(self):
-        self.manager.current = 'home'
+        self.manager.current = 'welcome'

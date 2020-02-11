@@ -14,7 +14,7 @@ class DecoderScreen(DefaultScreen):
     decode_output_label_text = StringProperty('Hit record or enter Morse Code below to start decoding')
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(title='Morse Code Recognizer', **kwargs)
         self.util = App.get_running_app().util
         self.amr = self.util.auto_morse_recognizer
 

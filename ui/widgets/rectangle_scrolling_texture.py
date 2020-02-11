@@ -9,12 +9,12 @@ class RectScrollingTexture(Rectangle):
 
     def __init__(self, **kwargs):
         super(RectScrollingTexture, self).__init__(**kwargs)
-        Clock.schedule_once(self.texture_init, 0)
-        Clock.schedule_interval(self.scroll_texture, 1 / 60.)
+        Clock.schedule_once(self.texture_init)
+        Clock.schedule_interval(self.scroll_texture, 1 / 30.)
 
     def texture_init(self, *args):
         self.texture.wrap = 'repeat'
 
     def scroll_texture(self, dt):
         for i in range(0, 8, 2):
-            self.tex_coords[i] += dt / 3.
+            self.tex_coords[i] += dt / 4.

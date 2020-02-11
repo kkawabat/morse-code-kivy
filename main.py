@@ -27,6 +27,7 @@ class NavigationItem(OneLineAvatarListItem):
 
 class MainApp(MDApp):
     def __init__(self, **kwargs):
+        self.title = 'Morse Coder'
         super().__init__(**kwargs)
         self.theme_cls.primary_palette = 'Green'
         self.theme_cls.primary_hue = '300'

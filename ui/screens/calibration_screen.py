@@ -20,7 +20,7 @@ Builder.load_file(r'ui\screens\calibration_screen.kv')
 
 class CalibrationScreen(DefaultScreen):
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(title='Calibration', **kwargs)
         self.util = App.get_running_app().util
 
     def on_value_change(self, value):

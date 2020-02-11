@@ -14,7 +14,7 @@
         anchor_y: 'top'
         MDToolbar:
             id: toolbar
-            title: "Navigation Drawer"
-            md_bg_color: app.theme_cls.primary_color
+            title: root.title
+            md_bg_color: .3,.3,.3,.9 # app.theme_cls.primary_light
             elevation: 10
             left_action_items: [['menu', lambda x: app.root.ids.nav_drawer.toggle_nav_drawer()]]
