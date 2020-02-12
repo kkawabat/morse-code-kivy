@@ -46,6 +46,7 @@ class MainApp(MDApp):
             "decode": ("text-to-speech", "Translate Morse Code", None),
             "encode": ("comment-text", "Text to Morse Code", None),
             "training": ("dumbbell", "Training", None),
+            "calibration": ("cogs", 'Calibrate', None),
             "exit": ("exit-to-app", "Exit", self.stop)}
 
         for nav_screen, (nav_icon, nav_text, on_release_func) in nav_item_dict.items():
