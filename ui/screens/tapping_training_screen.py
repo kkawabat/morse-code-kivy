@@ -3,12 +3,10 @@ import random
 import time
 
 from kivy.app import App
-from kivy.clock import Clock
 from kivy.factory import Factory
 from kivy.lang import Builder
-from kivy.properties import StringProperty, ObjectProperty
+from kivy.properties import StringProperty
 from kivy.uix.button import Button
-from kivy.uix.screenmanager import Screen
 
 from ui.screens.default_screen import DefaultScreen
 
@@ -118,4 +116,4 @@ class TappingScreen(DefaultScreen):
         self.manager.current = 'training'
 
     def return_home(self):
-        self.manager.current = 'welcome'
+        self.manager.current = 'home'

@@ -20,7 +20,7 @@ LETTER_END_DURATION_THRESHOLD_BIT = int(LETTER_END_DURATION_THRESHOLD_SEC * NUM_
 WORD_END_DURATION_THRESHOLD_BIT = int(WORD_END_DURATION_THRESHOLD_SEC * NUM_BITS_PER_SEC)
 
 
-class MorseHelper:
+class MorseEngine:
     def __init__(self):
         self.__letter_to_morse = {'a': '.-', 'b': '-...', 'c': '-.-.',
                                   'd': '-..', 'e': '.', 'f': '..-.',

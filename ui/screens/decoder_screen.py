@@ -17,27 +17,33 @@ class DecoderScreen(DefaultScreen):
         super().__init__(title='Morse Code Recognizer', **kwargs)
         self.util = App.get_running_app().util
         self.amr = self.util.auto_morse_recognizer
+        self.amr.init_stream(sampling_rate=16000, frame_size=4000)
+        self.mic_engine = self.util.mic_engine
+
+    def toggle_amr(self):
+        self.clear_text()
+        if self.ids.record_button.md_bg_color == App.get_running_app().theme_cls.primary_color:
+            self.start_amr()
+        else:
+            self.stop_amr()
 
     def clear_text(self, *args):
         self.decode_input_text = ''
         self.decode_output_label_text = ''
 
-    def decode_audio(self):
-        if self.ids.record_button.md_bg_color == App.get_running_app().theme_cls.primary_color:
-            self.ids.record_button.md_bg_color = App.get_running_app().theme_cls.error_color
-            self.decode_output_label_text = ''
-            self.amr.start()
-            Clock.schedule_interval(self.update_amr, self.amr.frame_rate)
+    def start_amr(self):
+        self.ids.record_button.md_bg_color = App.get_running_app().theme_cls.error_color
+        self.mic_engine.start_stream()
+        Clock.schedule_interval(self.update_amr, self.amr.frame_rate)
 
-        else:
-            self.ids.record_button.md_bg_color = App.get_running_app().theme_cls.primary_color
-            self.decode_output_label_text = ''
-            Clock.unschedule(self.update_amr)
-            self.amr.stop()
-            self.clear_text()
+    def stop_amr(self):
+        self.ids.record_button.md_bg_color = App.get_running_app().theme_cls.primary_color
+        self.mic_engine.stop_stream()
+        Clock.unschedule(self.update_amr)
 
     def update_amr(self, kargs):
-        morse_code_segment, _ = self.amr.update()
+        data = self.mic_engine.get_audio_frame()
+        morse_code_segment, _ = self.amr.translate_audio_to_morse(data)
         self.decode_input_text = self.decode_input_text + ''.join(morse_code_segment)
         self.decode_output_label_text = self.util.morse_helper.morse_to_text(self.decode_input_text)
         self.ids.decode_input.ids.box.text = 'Finished'

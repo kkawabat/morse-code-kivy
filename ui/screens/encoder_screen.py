@@ -20,13 +20,16 @@ class EncoderScreen(DefaultScreen):
         if text_btn.icon == 'send':
             self.play_prompt(text_input.text)
         elif text_btn.icon == 'close-circle':
-            self.encode_input.text = ''
-            self.encode_output_label.text = ''
-            self.clear_sound()
+            self.clear_input()
 
     def display_text_as_morse(self, text):
         prompt_as_morse = self.util.morse_helper.text_to_morse(text)
         self.encode_output_label.text = f'{text} as morse: {prompt_as_morse}'
+
+    def clear_input(self):
+        self.encode_input.text = ''
+        self.encode_output_label.text = ''
+        self.clear_sound()
 
     def play_prompt(self, text):
         self.clear_input()
@@ -45,8 +48,6 @@ class EncoderScreen(DefaultScreen):
         self.cur_sound = None
 
     def init_morse_sounds(self, text):
-        self.clear_sound()
-
         for letter in text:
             if letter == ' ':
                 self.sound_list.append('long_pause')

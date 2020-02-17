@@ -1,4 +1,5 @@
-from .morse_helper import MorseHelper
+from util.mic_engine import MicEngine
+from .morse_engine import MorseEngine
 from util.auto_morse_recognizer import AutoMorseRecognizer
 
 training_prompt_dict = {
@@ -37,10 +38,8 @@ training_prompt_dict = {
 
 class Utility(object):
     def __init__(self):
-        self.calibration = 10
-
-        # used in training screens
-        self.morse_helper = MorseHelper()
-        self.training_prompt_dict = training_prompt_dict
         self.training_difficulty = ''
-        self.auto_morse_recognizer = AutoMorseRecognizer(active_threshold=self.calibration, debug=True)
+        self.morse_helper = MorseEngine()
+        self.mic_engine = MicEngine()
+        self.training_prompt_dict = training_prompt_dict
+        self.auto_morse_recognizer = AutoMorseRecognizer(self.mic_engine)

@@ -27,45 +27,22 @@ WORD_END_DURATION_THRESHOLD_BIT = int(WORD_END_DURATION_THRESHOLD_SEC * NUM_BITS
 
 
 class AutoMorseRecognizer:
-    def __init__(self, debug=False, active_threshold=15):
+    def __init__(self, mic_engine, debug=False, active_threshold=15):
+        self.mic_engine = mic_engine
         self.debug = debug
         self.active_threshold = active_threshold
         self.old_buffer = []
-        if not IS_MOBILE:
-            self.pa = PyAudio()
-            self.stream = None
 
-    def calibrate_active_threshold(self):
-        pass
-
-    def start(self):
-        if not IS_MOBILE:
-            if self.stream is None:
-                self.stream = self.pa.open(format=paInt16,
-                                           channels=1,
-                                           rate=RATE,
-                                           input=True,
-                                           input_device_index=-1,
-                                           frames_per_buffer=CHUNK)
-            else:
-                self.stream.start_stream()
-
-    def stop(self):
-        if not IS_MOBILE:
-            self.stream.stop_stream()
+    def set_threshold(self, active_threshold):
+        self.active_threshold = active_threshold
 
     def update(self):
-        morse_code, speech_activity = [], [0] * self.bits_per_frame
-        if not IS_MOBILE:
-            try:
-                if self.stream is None or self.stream.is_stopped():
-                    raise IOError('stream is not started yet (run start() before update())')
-                else:
-                    data = np.frombuffer(self.stream.read(CHUNK), dtype=np.int16).astype(float)
-                    morse_code, speech_activity = self.get_morse_from_audio(data)
-            except Exception as e:
-                print(str(e))
-                morse_code, speech_activity = [], [0] * self.bits_per_frame
+        try:
+            data = self.mic_engine.get_audio_frame()
+            morse_code, speech_activity = self.get_morse_from_audio(data)
+        except Exception as e:
+            print(repr(e))
+            morse_code, speech_activity = [], [0] * self.bits_per_frame
         return morse_code, speech_activity
 
     # def get_morse_from_wav_file(self, audio_path):
@@ -86,9 +63,13 @@ class AutoMorseRecognizer:
     def frame_rate(self):
         return float(CHUNK/RATE)
 
-    def get_morse_from_audio(self, data):
-        speech_activity_vec = np.concatenate((self.old_buffer, self.get_voice_activity(data)))
-        morse_code, self.old_buffer = self.activity_to_morse(speech_activity_vec)
+    def translate_audio_to_morse(self, data):
+        try:
+            speech_activity_vec = np.concatenate((self.old_buffer, self.get_voice_activity(data)))
+            morse_code, self.old_buffer = self.activity_to_morse(speech_activity_vec)
+        except Exception as e:
+            print(repr(e))
+            morse_code, speech_activity_vec = [], [0] * self.bits_per_frame
         return morse_code, speech_activity_vec
 
     def get_voice_activity(self, data):
@@ -135,5 +116,3 @@ class AutoMorseRecognizer:
         return morse, old_buffer
 
 
-if __name__ == "__main__":
-    ms = AutoMorseRecognizer(debug=True)

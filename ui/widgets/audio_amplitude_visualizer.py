@@ -8,7 +8,7 @@ Builder.load_file(r'ui\widgets\audio_amplitude_visualizer.kv')
 
 class AudAmpVisualizer(BoxLayout):
 
-    def __init__(self, init_threshold=10, stack_count=40, **kwargs):
+    def __init__(self, init_threshold=10, stack_count=30, **kwargs):
         super().__init__(**kwargs)
         self.orientation = 'vertical'
         self.stack_count = stack_count
