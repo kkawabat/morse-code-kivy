@@ -39,7 +39,7 @@ class AutoMorseRecognizer:
     def update(self):
         try:
             data = self.mic_engine.get_audio_frame()
-            morse_code, speech_activity = self.get_morse_from_audio(data)
+            morse_code, speech_activity = self.translate_audio_to_morse(data)
         except Exception as e:
             print(repr(e))
             morse_code, speech_activity = [], [0] * self.bits_per_frame
@@ -51,7 +51,7 @@ class AutoMorseRecognizer:
     #     self.old_buffer = np.array([])
     #     for i in range(0, len(x)-CHUNK, CHUNK):
     #         data = x[i:i+CHUNK]
-    #         morse_code, _ = self.get_morse_from_audio(data)
+    #         morse_code, _ = self.translate_audio_to_morse(data)
     #         if morse_code:
     #             print(''.join(morse_code), end='')
 
