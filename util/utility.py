@@ -1,4 +1,4 @@
-from util.audio_engine import AudioEngine
+from util.mic_engine import AudioEngine
 from .morse_engine import MorseEngine
 from util.auto_morse_recognizer import AutoMorseRecognizer
 
