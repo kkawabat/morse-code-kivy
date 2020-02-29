@@ -1,5 +1,6 @@
 # #:import AudioIndicator ui.widgets.audio_indicator.AudioIndicator
 #:import DefaultButton ui.widgets.default_button
+#:import MorseButton ui.widgets.morse_button
 
 <TappingScreen>
     tapping_prompt_label: tapping_prompt_label
@@ -71,7 +72,7 @@
             anchor_y:'bottom'
             padding: [dp(25), dp(25), dp(25), dp(25)]
 
-            LongpressButton:
+            MorseButton:
                 id: tap_button
                 valign: 'center'
                 icon: 'record'
@@ -79,11 +80,8 @@
                 size: [dp(56), dp(56)]
                 bg_color: app.theme_cls.primary_color
                 text_color: [1, 1, 1, 1]
-                on_short_press:  root.tapped('.')
-                on_long_press: root.tapped('-')
+                morse_timing_dict: app.util.morse_helper.morse_duration_info
+                on_dot: root.tapped('.')
+                on_dash: root.tapped('-')
                 on_short_pause: root.tapped(' ')
                 on_long_pause: root.tapped('/')
-                long_press_dur : app.util.morse_helper.long_press_dur
-                short_press_dur : app.util.morse_helper.short_press_dur
-                long_pause_dur : app.util.morse_helper.long_pause_dur
-                short_pause_dur : app.util.morse_helper.short_pause_dur

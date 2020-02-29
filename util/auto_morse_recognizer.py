@@ -29,6 +29,7 @@ WORD_END_DURATION_THRESHOLD_BIT = int(WORD_END_DURATION_THRESHOLD_SEC * NUM_BITS
 class AutoMorseRecognizer:
     def __init__(self, mic_engine, debug=False, active_threshold=15):
         self.mic_engine = mic_engine
+        self.mic_engine.init_stream(sampling_rate=RATE, frame_size=CHUNK)
         self.debug = debug
         self.active_threshold = active_threshold
         self.old_buffer = []

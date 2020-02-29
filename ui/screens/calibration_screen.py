@@ -17,6 +17,8 @@ class CalibrationScreen(DefaultScreen):
         super().__init__(title='Calibration', **kwargs)
         self.util = App.get_running_app().util
         self.mic_engine = self.util.mic_engine
+        default_threshold = self.util.auto_morse_recognizer.active_threshold
+        self.sensitivity_value_label = str(default_threshold)
 
     def on_slider_value_change(self, slider_value):
         self.util.auto_morse_recognizer.set_threshold(slider_value)

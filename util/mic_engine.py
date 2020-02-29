@@ -17,7 +17,7 @@ class AudioEngine:
             self.stream.close()
 
         self.stream = self.pyaudio_engine.open(format=paInt16, channels=1, rate=self.sampling_rate,
-                                               input=True, output=True, input_device_index=-1,
+                                               input=True, input_device_index=-1,
                                                frames_per_buffer=self.frame_size)
 
     def get_audio_frame(self):

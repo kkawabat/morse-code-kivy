@@ -1,10 +1,8 @@
 import numpy as np
 
-from util.sound_engine import SoundEngine
-
 
 class MorseEngine:
-    def __init__(self):
+    def __init__(self, sound_engine):
         self.__letter_to_morse = {'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.', 'f': '..-.', 'g': '--.',
                                   'h': '....', 'i': '..', 'j': '.---', 'k': '-.-', 'l': '.-..', 'm': '--', 'n': '-.',
                                   'o': '---', 'p': '.--.', 'q': '--.-', 'r': '.-.', 's': '...', 't': '-', 'u': '..-',
@@ -12,17 +10,21 @@ class MorseEngine:
                                   '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
                                   '6': '-....', '7': '--...', '8': '---..', '9': '----.', ' ': '/'}
         self.__morse_to_letter = {morse: letter for letter, morse in self.__letter_to_morse.items()}
-        self.speaker = SoundEngine()
+        self.speaker = sound_engine
         self.rate = 16000
-        self.morse_time_unit = .08
+        self.morse_unit = .08
         self.beep_pitch = 200
-        self.morse_signal_templates = self.gen_morse_signal_template(self.beep_pitch, self.morse_time_unit)
+        self.morse_duration_info = self.get_morse_duration(morse_unit=self.morse_unit)
+        self.morse_signal_templates = self.gen_morse_signal_template(self.beep_pitch, self.morse_unit)
+
+    def get_morse_duration(self, morse_unit):
+        return {'dot': morse_unit, 'dash': morse_unit*3, 'spause': morse_unit*3, 'lpause': morse_unit*7}
 
     def gen_morse_signal_template(self, frequency, morse_time_unit):
         morse_time_sample = int(self.rate * morse_time_unit)
         short_short_pause = np.zeros(morse_time_sample * 1)
-        short_pause = np.zeros(morse_time_sample * 2)
-        long_pause = np.zeros(morse_time_sample * 6)
+        short_pause = np.zeros(morse_time_sample * 2).astype(np.float32).tostring()
+        long_pause = np.zeros(morse_time_sample * 6).astype(np.float32).tostring()
 
         dot_sig = np.sin(frequency * 2 * np.pi * np.arange(morse_time_sample) / self.rate)
         dot_sig[:100] = dot_sig[:100] * np.linspace(0, 1, 100)
@@ -32,7 +34,6 @@ class MorseEngine:
         dash_sig = np.sin(frequency * 2 * np.pi * np.arange(morse_time_sample * 3) / self.rate)
         dash_sig[:100] = dash_sig[:100] * np.linspace(0, 1, 100)
         dash_sig[-100:] = dash_sig[-100:] * np.linspace(1, 0, 100)
-        dash_sig = dash_sig.astype(np.float32).tostring()
         dash_sig = np.concatenate([dash_sig, short_short_pause]).astype(np.float32).tostring()
         return {'dot': dot_sig, 'dash': dash_sig, 'spause': short_pause, 'lpause': long_pause}
 
@@ -72,4 +73,12 @@ class MorseEngine:
                 signal_list.append(self.morse_signal_templates['spause'])
             elif code == '/':
                 signal_list.append(self.morse_signal_templates['lpause'])
-        self.speaker.play_audio_as_thread(signal_list)
+        self.speaker.play_audio(signal_list)
+
+
+if __name__ == '__main__':
+    me = MorseEngine()
+    me.text_to_morse_sound('hello')
+    me.text_to_morse_sound('      ')
+    # me.text_to_morse_sound('soasdfasdfs')
+    # me.text_to_morse_sound('soasdfasdfs')

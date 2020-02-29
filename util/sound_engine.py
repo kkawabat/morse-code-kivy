@@ -11,7 +11,7 @@ class SoundEngine:
         self.audio_thread = None
         self.stop_audio_flag = False
 
-    def play_audio_as_thread(self, audio_signals):
+    def play_audio(self, audio_signals):
         self.stop_audio()
         self.audio_thread = threading.Thread(target=self._play_audio, args=(audio_signals, lambda: self.stop_audio_flag))
         self.stop_audio_flag = False
@@ -20,6 +20,8 @@ class SoundEngine:
     def stop_audio(self):
         if self.audio_thread is not None:
             self.stop_audio_flag = True
+            while self.audio_thread.is_alive():
+                print('wait')
             self.audio_thread = None
 
     def _play_audio(self, audio_signals, stop):

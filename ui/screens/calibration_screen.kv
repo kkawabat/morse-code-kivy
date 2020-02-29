@@ -11,7 +11,7 @@
         pos_hint: {'top': 0.75, 'center_x': 0.5}
 
         MDLabel:
-            text: 'Calibrate Audio Input'
+            text: 'Calibrate Mic Sensitivity for Auto Morse Recognizer'
             font_style: 'Body2'
             halign: 'center'
             theme_text_color: 'Custom'
@@ -31,6 +31,7 @@
             Slider:
                 size_hint: 8, None
                 pos_hint: {'center_y': 0.5}
+                value: app.util.auto_morse_recognizer.active_threshold
                 on_value: root.on_slider_value_change(self.value)
 
             MDLabel:

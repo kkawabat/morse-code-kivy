@@ -1,4 +1,5 @@
 from util.mic_engine import AudioEngine
+from util.sound_engine import SoundEngine
 from .morse_engine import MorseEngine
 from util.auto_morse_recognizer import AutoMorseRecognizer
 
@@ -39,7 +40,11 @@ training_prompt_dict = {
 class Utility(object):
     def __init__(self):
         self.training_difficulty = ''
-        self.morse_helper = MorseEngine()
+        self.sound_engine = SoundEngine()
+        self.morse_helper = MorseEngine(self.sound_engine)
+
         self.mic_engine = AudioEngine()
-        self.training_prompt_dict = training_prompt_dict
         self.auto_morse_recognizer = AutoMorseRecognizer(self.mic_engine)
+
+        self.training_prompt_dict = training_prompt_dict
+

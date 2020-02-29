@@ -17,7 +17,6 @@ class DecoderScreen(DefaultScreen):
         super().__init__(title='Morse Code Recognizer', **kwargs)
         self.util = App.get_running_app().util
         self.amr = self.util.auto_morse_recognizer
-        self.amr.init_stream(sampling_rate=16000, frame_size=4000)
         self.mic_engine = self.util.mic_engine
 
     def toggle_amr(self):
