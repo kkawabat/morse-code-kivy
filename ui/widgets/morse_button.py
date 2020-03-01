@@ -16,7 +16,7 @@ class MorseButton(Button):
     def on_release(self):
         self.last_release_time = time.time()
         press_duration = time.time() - self.last_press_time
-        if press_duration >= self.morse_duration_dict['dash']:
+        if press_duration >= self.morse_timing_dict['dash']:
             self.dispatch('on_dash')
         else:
             self.dispatch('on_dot')

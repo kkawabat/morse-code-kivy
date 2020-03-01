@@ -18,23 +18,22 @@ class CalibrationScreen(DefaultScreen):
         self.util = App.get_running_app().util
         self.mic_engine = self.util.mic_engine
         default_threshold = self.util.auto_morse_recognizer.active_threshold
-        self.sensitivity_value_label = str(default_threshold)
+        self.sensitivity_value_label = f"{default_threshold:.2f}%"
 
     def on_slider_value_change(self, slider_value):
         self.util.auto_morse_recognizer.set_threshold(slider_value)
-        self.sensitivity_value_label = str(round(slider_value, 2))
+        self.sensitivity_value_label = f"{slider_value:.2f}%"
         self.ids.amp_viz.set_threshold(slider_value)
 
     def update_amp_viz(self, *args):
-        data = self.mic_engine.get_audio_frame()
-        intensity = np.log(np.mean(data ** 2)) * 8
-        print(intensity)
+        intensity = self.util.auto_morse_recognizer.get_intensity_as_percent()
         self.ids.amp_viz.set_level(intensity)
 
     def on_enter(self):
-        self.mic_engine.init_stream(sampling_rate=16000, frame_size=800)
+        super().on_enter()
         Clock.schedule_interval(self.update_amp_viz, 1 / 20)
 
     def on_leave(self, *args):
+        super().on_leave()
         self.mic_engine.stop_stream()
         Clock.unschedule(self.update_amp_viz)

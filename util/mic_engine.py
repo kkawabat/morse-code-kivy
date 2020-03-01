@@ -31,11 +31,7 @@ class AudioEngine:
     def stop_stream(self):
         if self.stream is not None and self.stream.is_active():
             self.stream.stop_stream()
-        else:
-            raise Exception("stream does not exist run init_stream() first")
 
     def start_stream(self):
         if self.stream is not None and self.stream.is_stopped():
             self.stream.start_stream()
-        else:
-            raise Exception("stream does not exist run init_stream() first")

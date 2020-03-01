@@ -18,7 +18,7 @@ class MorseEngine:
         self.morse_signal_templates = self.gen_morse_signal_template(self.beep_pitch, self.morse_unit)
 
     def get_morse_duration(self, morse_unit):
-        return {'dot': morse_unit, 'dash': morse_unit*3, 'spause': morse_unit*3, 'lpause': morse_unit*7}
+        return {'dot': morse_unit, 'dash': morse_unit*3, 'short_pause': morse_unit*3, 'long_pause': morse_unit*7}
 
     def gen_morse_signal_template(self, frequency, morse_time_unit):
         morse_time_sample = int(self.rate * morse_time_unit)
@@ -35,7 +35,7 @@ class MorseEngine:
         dash_sig[:100] = dash_sig[:100] * np.linspace(0, 1, 100)
         dash_sig[-100:] = dash_sig[-100:] * np.linspace(1, 0, 100)
         dash_sig = np.concatenate([dash_sig, short_short_pause]).astype(np.float32).tostring()
-        return {'dot': dot_sig, 'dash': dash_sig, 'spause': short_pause, 'lpause': long_pause}
+        return {'dot': dot_sig, 'dash': dash_sig, 'short_pause': short_pause, 'long_pause': long_pause}
 
     def morse_to_text(self, morse_code):
         text = ''
@@ -70,9 +70,9 @@ class MorseEngine:
             elif code == '-':
                 signal_list.append(self.morse_signal_templates['dash'])
             elif code == ' ':
-                signal_list.append(self.morse_signal_templates['spause'])
+                signal_list.append(self.morse_signal_templates['short_pause'])
             elif code == '/':
-                signal_list.append(self.morse_signal_templates['lpause'])
+                signal_list.append(self.morse_signal_templates['long_pause'])
         self.speaker.play_audio(signal_list)
 
 

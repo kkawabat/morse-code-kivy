@@ -25,7 +25,7 @@ class AudAmpVisualizer(BoxLayout):
         self.set_level(0)
 
     def set_level(self, level):
-        activity_level = round(level * self.stack_count / 100)
+        activity_level = round(level * self.stack_count)
         for i, current_cell in enumerate(self.cell_array):
             if activity_level <= i:
                 current_cell.md_bg_color = current_cell.md_bg_color[:-1] + [0.2]

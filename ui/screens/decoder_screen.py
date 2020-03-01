@@ -47,5 +47,13 @@ class DecoderScreen(DefaultScreen):
         self.decode_output_label_text = self.util.morse_helper.morse_to_text(self.decode_input_text)
         self.ids.decode_input.ids.box.text = 'Finished'
 
+    def on_enter(self):
+        super().on_enter()
+        self.mic_engine.init_stream(sampling_rate=16000, frame_size=4000)
+
+    def on_leave(self):
+        super().on_leave()
+        self.stop_amr()
+
     def return_home(self):
         self.manager.current = 'home'
