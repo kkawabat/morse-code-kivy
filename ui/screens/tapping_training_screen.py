@@ -1,14 +1,11 @@
 # Kivy imports
 import random
-import time
 
 from kivy.app import App
-from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import StringProperty
 
 from ui.screens.default_screen import DefaultScreen
-
 
 Builder.load_file(r'ui\screens\tapping_training_screen.kv')
 
@@ -45,7 +42,10 @@ class TappingScreen(DefaultScreen):
     def update_text_display(self):
         self.decode_text = self.util.morse_helper.morse_to_text(self.decode_morse_text)
         if self.prompt == self.decode_text:
-            self.decode_output_text = "You got it! click dice icon to do next"
+            self.decode_output_text = "You got it!"
+            if self.util.training_difficulty == 'Easy':
+                mnemonic_help = f" Remember {self.decode_text} with mnemonic: {self.util.mnemonic_dict[self.decode_text]}"
+                self.decode_output_label.text += mnemonic_help
 
     def update_morse_display(self, morse_code):
         self.decode_morse_text = self.decode_morse_text + ''.join(morse_code)
@@ -56,6 +56,10 @@ class TappingScreen(DefaultScreen):
         self.decode_text = ''
         self.decode_output_text = ''
 
+    def on_leave(self):
+        super().on_leave()
+        self.clear_input()
+
     def tapped(self, morse_char):
         print(morse_char)
         self.update_morse_display([morse_char])
@@ -63,5 +67,3 @@ class TappingScreen(DefaultScreen):
     def return_menu(self):
         self.manager.current = 'training'
 
-    def return_home(self):
-        self.manager.current = 'home'

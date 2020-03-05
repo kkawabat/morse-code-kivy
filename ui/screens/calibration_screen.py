@@ -1,9 +1,7 @@
-import numpy as np
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.properties import StringProperty
-from pyaudio import paInt16, PyAudio
 
 from ui.screens.default_screen import DefaultScreen
 
@@ -31,7 +29,7 @@ class CalibrationScreen(DefaultScreen):
 
     def on_enter(self):
         super().on_enter()
-        Clock.schedule_interval(self.update_amp_viz, 1 / 20)
+        Clock.schedule_interval(self.update_amp_viz, 1 / 10)
 
     def on_leave(self, *args):
         super().on_leave()

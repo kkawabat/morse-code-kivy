@@ -25,10 +25,11 @@
         elevation: 15
         md_bg_color: app.theme_cls.accent_color
 
-        Image:
-            id: morse_alphabet
+        ToggleImage:
             size_hint: 1, 1
-            source: 'ui/img/morse_code_alphabet.png'
+            source: 'ui/img/morse_code_alphabet_hidden.png'
+            source_on: 'ui/img/morse_code_alphabet_hidden.png'
+            source_off: 'ui/img/morse_code_alphabet.png'
 
         MDLabel:
             id: tapping_prompt_label
@@ -45,6 +46,7 @@
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             size_hint: 0.85, 0.5
             icon_left: 'close-circle'
+            icon_left_disabled: False
             icon_right: 'send'
             icon_callback: root.check_answer
 

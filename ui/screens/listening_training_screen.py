@@ -41,58 +41,29 @@ class ListeningScreen(DefaultScreen):
 
     def check_answer(self, *args):
         user_input = self.user_text_field.text.lower()
+
         if self.prompt == user_input:
-            self.decode_output_label.text = "You got it right!"
+            self.decode_output_label.text = f"You got it right!"
+            if self.util.training_difficulty == 'Easy':
+                mnemonic_help = f" Remember {user_input} with mnemonic: {self.util.mnemonic_dict[user_input]}"
+                self.decode_output_label.text += mnemonic_help
         else:
             self.decode_output_label.text = "nope you got it wrong!"
 
     def play_prompt(self):
-        if self.cur_sound:
-            self.cur_sound_index = 9999
-            self.cur_sound.stop()
-
-        print(f"playing morse for: {self.prompt}")
-        Clock.schedule_once(self.init_morse_sounds, 0)
-
-    def init_morse_sounds(self, dt):
-        self.cur_sound_index = 0
-        self.sound_list = []
-
-        for letter in self.prompt:
-            if letter == ' ':
-                self.sound_list.append('long_pause')
-            else:
-                self.sound_list.append(letter)
-                self.sound_list.append('short_pause')
-
-        if len(self.sound_list) > self.cur_sound_index:
-            letter_char_sound = self.sound_list[self.cur_sound_index]
-            self.cur_sound = self.util.morse_helper.get_letter_as_morse_sound(letter_char_sound)
-            self.cur_sound.bind(on_stop=self.play_next_sound)
-            self.cur_sound.play()
-
-    def play_next_sound(self, dt):
-        self.cur_sound_index += 1
-        if len(self.sound_list) > self.cur_sound_index:
-            letter_char_sound = self.sound_list[self.cur_sound_index]
-            self.cur_sound = self.util.morse_helper.get_letter_as_morse_sound(letter_char_sound)
-            self.cur_sound.bind(on_stop=self.play_next_sound)
-            self.cur_sound.play()
+        self.util.morse_helper.text_to_morse_sound(self.prompt)
 
     def play_new_prompt(self):
         self.clear_input()
-        if self.util.training_difficulty in ['Easy', 'Medium', 'Hard']:
-            if self.util.training_difficulty == 'Easy':
-                training_level = 'letter'
-            elif self.util.training_difficulty == 'Medium':
-                training_level = 'word'
-            else:
-                training_level = 'sentence'
-            self.prompt = random.choice(self.util.training_prompt_dict[training_level])
-            self.tapping_prompt_label.text = f"Please translate the morse code " \
-                                             f"({training_level}) being played"
+        if self.util.training_difficulty == 'Easy':
+            training_level = 'letter'
+        elif self.util.training_difficulty == 'Medium':
+            training_level = 'word'
         else:
-            print(f"failed to load {self.util.training_difficulty}")
+            training_level = 'sentence'
+        self.prompt = random.choice(self.util.training_prompt_dict[training_level])
+        self.tapping_prompt_label.text = f"Please translate the morse code " \
+                                         f"({training_level}) being played"
 
         self.play_prompt()
 

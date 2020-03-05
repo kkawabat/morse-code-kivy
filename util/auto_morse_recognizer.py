@@ -35,7 +35,7 @@ class AutoMorseRecognizer:
         self.old_buffer = []
 
     def set_threshold(self, active_threshold):
-        self.active_threshold = active_threshold
+        self.active_threshold = active_threshold * MAX_INTENSITY / 100
 
     # todo refactor get_intensity() and update() so it is DRY
     def get_intensity_as_percent(self):
@@ -70,7 +70,6 @@ class AutoMorseRecognizer:
     def translate_audio_to_morse(self, data):
         try:
             speech_activity = self.raw_audio_to_speech_intensity(data)
-            print(speech_activity)
             speech_activity_vec = np.concatenate((self.old_buffer, speech_activity))
             morse_code, self.old_buffer = self.activity_to_morse(speech_activity_vec)
         except Exception as e:
@@ -81,6 +80,8 @@ class AutoMorseRecognizer:
     def raw_audio_to_speech_intensity(self, data):
         data_reshaped = data.reshape((-1, DATA_RATE))
         intensity = np.log(np.mean(data_reshaped ** 2, axis=1))
+        print(intensity)
+        print(self.active_threshold)
         speech_activity = (intensity > self.active_threshold).astype(int)
         if self.debug:
             print(f'max intensity: {max(intensity)}')

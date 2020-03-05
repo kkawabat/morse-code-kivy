@@ -75,6 +75,9 @@ class MorseEngine:
                 signal_list.append(self.morse_signal_templates['long_pause'])
         self.speaker.play_audio(signal_list)
 
+    def clear_sound(self):
+        self.speaker.stop_audio()
+
 
 if __name__ == '__main__':
     me = MorseEngine()

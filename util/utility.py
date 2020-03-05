@@ -36,6 +36,33 @@ training_prompt_dict = {
                  'turn shaker upside down']
 }
 
+mnemonic_dict = {'a': 'a-PART',
+                 'b': 'BOOT-to-the-head',
+                 'c': 'CO-co-CO-la',
+                 'd': 'DOCK-wor-ker',
+                 'e': 'eh',
+                 'f': 'for-the-FAIR-es',
+                 'g': 'GOOD-GRAV-y',
+                 'h': 'hi-pi-ty-hop',
+                 'i': 'aye-aye',
+                 'j': 'lets-JUMP-JUMP-JUMP',
+                 'k': 'KIN-ga-ROO',
+                 'l': 'to-HELL-with-it',
+                 'm': 'MMM-MMM',
+                 'n': 'NAV-y',
+                 'o': 'ONE-OF-US',
+                 'p': 'a-POO-PEE-smell',
+                 'q': 'GOD-SAVE-the-QUEEN',
+                 'r': 'ro-TA-tion',
+                 's': 'si-si-si',
+                 't': 'TALL',
+                 'u': 'un-der-WHERE',
+                 'v': 'du-du-du-DUUU (beethoven\'s V\'th Symphony',
+                 'w': 'a-WHITE-WHALE',
+                 'x': 'X-marks-the-SPOT',
+                 'y': 'YELL-ow-YO-YO',
+                 'z': 'ZINC-ZOO-kee-per'}
+
 
 class Utility(object):
     def __init__(self):
@@ -47,4 +74,4 @@ class Utility(object):
         self.auto_morse_recognizer = AutoMorseRecognizer(self.mic_engine)
 
         self.training_prompt_dict = training_prompt_dict
-
+        self.mnemonic_dict = mnemonic_dict

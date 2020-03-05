@@ -30,6 +30,20 @@
                     keep_ratio: True
 
             DefaultButton:
+                text: 'Speed Tapping Test'
+                icon: 'timer'
+                size_hint_x: 1
+                on_press:
+                    root.manager.current = 'tapspeed'
+
+            DefaultButton:
+                text: 'Train'
+                icon: 'dumbbell'
+                size_hint_x: 1
+                on_press:
+                    root.manager.current = 'training'
+
+            DefaultButton:
                 text: 'Translate Morse Code'
                 size_hint_x: 1
                 icon: 'text-to-speech'
@@ -42,13 +56,6 @@
                 size_hint_x: 1
                 on_press:
                     root.manager.current = 'encode'
-
-            DefaultButton:
-                text: 'Train'
-                icon: 'dumbbell'
-                size_hint_x: 1
-                on_press:
-                    root.manager.current = 'training'
 
             DefaultButton:
                 text: 'Calibrate'

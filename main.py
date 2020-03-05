@@ -43,9 +43,10 @@ class MainApp(MDApp):
     def init_nav_menu(self):
         nav_item_dict = {
             "home": ("home", "Home", None),
+            "tapspeed": ("timer", "Speed Tapping Test", None),
+            "training": ("dumbbell", "Training", None),
             "decode": ("text-to-speech", "Translate Morse Code", None),
             "encode": ("comment-text", "Text to Morse Code", None),
-            "training": ("dumbbell", "Training", None),
             "calibration": ("cogs", 'Calibrate', None),
             "exit": ("exit-to-app", "Exit", self.stop)}
 
