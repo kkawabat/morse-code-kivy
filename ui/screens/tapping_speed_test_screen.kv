@@ -32,15 +32,30 @@
             source_on: 'ui/img/morse_code_alphabet_hidden.png'
             source_off: 'ui/img/morse_code_alphabet.png'
 
-        MDTextFieldRound:
+        Label:
+            canvas.before:
+                Color:
+                    rgba:  [0.6, 0.6, 0.6, 1]
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [dp(10)]
             id: prompt_textfield
             text: root.prompt_display
-            hint_text: 'What you need to type'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            icon_type: 'without'
+            markup: True
+            background_color: .6, .6, .6, 1
             size_hint: 0.85, 0.5
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
 
         MDTextFieldRound:
+#            canvas.before:
+#                Color:
+#                    rgba:  [0.6, 0.6, 0.6, 1]
+#                RoundedRectangle:
+#                    size: self.size
+#                    pos: self.pos
+#                    radius: [dp(10)]
             id: decode_textfield
             text: root.decode_text
             hint_text: 'What your morse code translates to'
@@ -48,10 +63,18 @@
             icon_type: 'without'
             size_hint: 0.85, 0.5
 
-        MDTextFieldRound:
+        Label:
+#        MDTextFieldRound:
+#            canvas.before:
+#                Color:
+#                    rgba:  [0.6, 0.6, 0.6, 1]
+#                RoundedRectangle:
+#                    size: self.size
+#                    pos: self.pos
+#                    radius: [dp(10)]
             id: decode_morse
             text: root.decode_morse_text
-            hint_text: 'Your morse will be displayed here'
+#            hint_text: 'Your morse will be displayed here'
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             icon_type: 'without'
             size_hint: 0.85, 0.5

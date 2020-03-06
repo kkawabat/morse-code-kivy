@@ -29,20 +29,21 @@ class TappingSpeedTestScreen(DefaultScreen):
     def update_displays(self, morse_code):
         self.decode_morse_text = self.decode_morse_text + ''.join(morse_code)
         self.decode_text = self.util.morse_helper.morse_to_text(self.decode_morse_text)
+        self.update_prompt()
 
     def update_prompt(self):
         num_correct = self.calc_correct_position()
-        self.prompt_display = f"[color = 3333ff]{self.prompt_text[:num_correct]}[/color]{self.prompt_text[num_correct:]}"
+        self.prompt_display = f"[color=33ff33]{self.prompt_text[:num_correct]}[/color]{self.prompt_text[num_correct:]}"
 
     def reset_test(self):
         self.decode_morse_text = ''
         self.decode_text = ''
         self.prompt_text = ''
-        self.prompt_display = ""
+        self.prompt_display = "Type the words that appears when you start the test"
         self.cur_state = 'stopped'
 
     def start_test(self):
-        Clock.schedule_once(self.display_score_popup, 2)
+        Clock.schedule_once(self.display_score_popup, 60)
         self.generate_prompt_text()
 
     def on_enter(self, *args):
@@ -70,6 +71,7 @@ class TappingSpeedTestScreen(DefaultScreen):
         num_mistake = len(self.decode_text) - num_correct
         score_popup = Popup(title='test')
         score_popup.open()
+        self.reset_test()
 
     def generate_prompt_text(self):
         self.prompt_text = ' '.join(random.sample(self.util.training_prompt_dict['word'], 10))
