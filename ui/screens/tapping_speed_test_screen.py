@@ -1,11 +1,10 @@
 # Kivy imports
 import random
-
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ObjectProperty
 
 from ui.screens.default_screen import DefaultScreen
 
@@ -16,6 +15,7 @@ class TappingSpeedTestScreen(DefaultScreen):
     decode_morse_text = StringProperty('')
     decode_text = StringProperty('')
     prompt_display = StringProperty('')
+    decode_morse2 = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super().__init__(title='Tapping Training', **kwargs)
@@ -25,6 +25,7 @@ class TappingSpeedTestScreen(DefaultScreen):
         self.prompt_display = ""
         self.cur_state = None
         self.reset_test()
+        self.refs = [self.decode_morse2]
 
     def update_displays(self, morse_code):
         self.decode_morse_text = self.decode_morse_text + ''.join(morse_code)
@@ -47,10 +48,8 @@ class TappingSpeedTestScreen(DefaultScreen):
         self.generate_prompt_text()
 
     def on_enter(self, *args):
+        super().on_enter()
         self.reset_test()
-
-    def on_leave(self):
-        super().on_leave()
 
     def tapped(self, morse_char):
         if self.cur_state == 'stopped':

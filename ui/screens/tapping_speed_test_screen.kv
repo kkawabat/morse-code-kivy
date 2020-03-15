@@ -2,6 +2,7 @@
 #:import DefaultButton ui.widgets.default_button
 #:import MorseButton ui.widgets.morse_button
 #:import ToggleImage ui.widgets.toggle_image
+#:import Label kivy.uix.label
 
 <TappingSpeedTestScreen>
     tap_button: tap_button
@@ -11,6 +12,7 @@
         anchor_y: 'top'
 
         MDToolbar:
+            id: asdf
             title: 'Speed Tap'
             anchor_title: 'center'
             md_bg_color: app.theme_cls.primary_color
@@ -33,6 +35,7 @@
             source_off: 'ui/img/morse_code_alphabet.png'
 
         Label:
+            id: prompt_textfield
             canvas.before:
                 Color:
                     rgba:  [0.6, 0.6, 0.6, 1]
@@ -40,22 +43,14 @@
                     size: self.size
                     pos: self.pos
                     radius: [dp(10)]
-            id: prompt_textfield
             text: root.prompt_display
             markup: True
             background_color: .6, .6, .6, 1
             size_hint: 0.85, 0.5
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-
-        MDTextFieldRound:
-#            canvas.before:
-#                Color:
-#                    rgba:  [0.6, 0.6, 0.6, 1]
-#                RoundedRectangle:
-#                    size: self.size
-#                    pos: self.pos
-#                    radius: [dp(10)]
+        Label:
+#        MDTextFieldRound:
             id: decode_textfield
             text: root.decode_text
             hint_text: 'What your morse code translates to'
@@ -63,23 +58,15 @@
             icon_type: 'without'
             size_hint: 0.85, 0.5
 
-        Label:
-#        MDTextFieldRound:
-#            canvas.before:
-#                Color:
-#                    rgba:  [0.6, 0.6, 0.6, 1]
-#                RoundedRectangle:
-#                    size: self.size
-#                    pos: self.pos
-#                    radius: [dp(10)]
-            id: decode_morse
+        MDTextFieldRound:
+            hint_text: 'Your morse will be displayed here'
             text: root.decode_morse_text
-#            hint_text: 'Your morse will be displayed here'
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             icon_type: 'without'
             size_hint: 0.85, 0.5
 
         BoxLayout:
+            id: test
             anchor_x:'center'
             anchor_y:'bottom'
             padding: [dp(25), dp(25), dp(25), dp(25)]
