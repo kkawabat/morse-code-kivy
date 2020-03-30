@@ -9,13 +9,19 @@ class ToggleImage(Image):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
         self.toggled = False
+
+    def set_toggle(self, toggle_bool=None):
+        if toggle_bool is None:
+            self.toggled = not self.toggled
+        else:
+            self.toggled = toggle_bool
+
+        if self.toggled:
+            self.source = self.source_off
+        else:
+            self.source = self.source_on
 
     def on_touch_up(self, touch):
         if self.collide_point(*touch.pos):
-            self.toggled = not self.toggled
-            if self.toggled:
-                self.source = self.source_off
-            else:
-                self.source = self.source_on
+            self.set_toggle()

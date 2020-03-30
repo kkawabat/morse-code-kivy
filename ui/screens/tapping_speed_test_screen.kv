@@ -6,6 +6,7 @@
 
 <TappingSpeedTestScreen>
     tap_button: tap_button
+    tog_img: tog_img
 
     AnchorLayout:
         anchor_x: 'center'
@@ -29,6 +30,7 @@
         md_bg_color: app.theme_cls.accent_color
 
         ToggleImage:
+            id: tog_img
             size_hint: 1, 1
             source: 'ui/img/morse_code_alphabet_hidden.png'
             source_on: 'ui/img/morse_code_alphabet_hidden.png'
@@ -50,20 +52,33 @@
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
         Label:
-#        MDTextFieldRound:
             id: decode_textfield
+            canvas.before:
+                Color:
+                    rgba:  [0.6, 0.6, 0.6, 1]
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [dp(10)]
             text: root.decode_text
-            hint_text: 'What your morse code translates to'
+            markup: True
+            size_hint: 0.85, 0.5
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            icon_type: 'without'
+
+        Label:
+            id: decode_textfield
+            canvas.before:
+                Color:
+                    rgba:  [0.6, 0.6, 0.6, 1]
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [dp(10)]
+            text: root.decode_morse_text
+            markup: True
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             size_hint: 0.85, 0.5
 
-        MDTextFieldRound:
-            hint_text: 'Your morse will be displayed here'
-            text: root.decode_morse_text
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            icon_type: 'without'
-            size_hint: 0.85, 0.5
 
         BoxLayout:
             id: test
