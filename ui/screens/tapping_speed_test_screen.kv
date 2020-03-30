@@ -1,0 +1,101 @@
+# #:import AudioIndicator ui.widgets.audio_indicator.AudioIndicator
+#:import DefaultButton ui.widgets.default_button
+#:import MorseButton ui.widgets.morse_button
+#:import ToggleImage ui.widgets.toggle_image
+#:import Label kivy.uix.label
+
+<TappingSpeedTestScreen>
+    tap_button: tap_button
+    tog_img: tog_img
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'top'
+
+        MDToolbar:
+            id: asdf
+            title: 'Speed Tap'
+            anchor_title: 'center'
+            md_bg_color: app.theme_cls.primary_color
+            left_action_items: [["arrow-left", lambda x: root.return_home()]]
+
+    MDCard:
+        id: decode_card
+        padding: dp(24)
+        spacing: dp(24)
+        orientation: 'vertical'
+        size_hint: 0.85, 0.7
+        pos_hint: {'top': 0.85, 'center_x': 0.5}
+        elevation: 15
+        md_bg_color: app.theme_cls.accent_color
+
+        ToggleImage:
+            id: tog_img
+            size_hint: 1, 1
+            source: 'ui/img/morse_code_alphabet_hidden.png'
+            source_on: 'ui/img/morse_code_alphabet_hidden.png'
+            source_off: 'ui/img/morse_code_alphabet.png'
+
+        Label:
+            id: prompt_textfield
+            canvas.before:
+                Color:
+                    rgba:  [0.6, 0.6, 0.6, 1]
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [dp(10)]
+            text: root.prompt_display
+            markup: True
+            background_color: .6, .6, .6, 1
+            size_hint: 0.85, 0.5
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            id: decode_textfield
+            canvas.before:
+                Color:
+                    rgba:  [0.6, 0.6, 0.6, 1]
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [dp(10)]
+            text: root.decode_text
+            markup: True
+            size_hint: 0.85, 0.5
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            id: decode_textfield
+            canvas.before:
+                Color:
+                    rgba:  [0.6, 0.6, 0.6, 1]
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [dp(10)]
+            text: root.decode_morse_text
+            markup: True
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            size_hint: 0.85, 0.5
+
+
+        BoxLayout:
+            id: test
+            anchor_x:'center'
+            anchor_y:'bottom'
+            padding: [dp(25), dp(25), dp(25), dp(25)]
+
+            MorseButton:
+                id: tap_button
+                valign: 'center'
+                icon: 'record'
+                text: root.morse_button_text
+                size: [dp(56), dp(56)]
+                bg_color: app.theme_cls.primary_color
+                text_color: [1, 1, 1, 1]
+                morse_timing_dict: app.util.morse_helper.morse_duration_info
+                on_dot: root.tapped('.')
+                on_dash: root.tapped('-')
+                on_short_pause: root.tapped(' ')
+                on_long_pause: root.tapped('/')

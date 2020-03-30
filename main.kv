@@ -1,0 +1,101 @@
+#:import IconLeftWidget kivymd.uix.list.IconLeftWidget
+#:import HomeScreen ui.screens.home_screen
+#:import DecoderScreen ui.screens.decoder_screen
+#:import EncoderScreen ui.screens.encoder_screen
+#:import TrainingMenuScreen ui.screens.training_menu_screen
+#:import TappingScreen ui.screens.tapping_training_screen
+#:import ListeningScreen ui.screens.listening_training_screen
+#:import DefaultScreen ui.screens.default_screen
+#:import CalibrationScreen ui.screens.calibration_screen
+#:import TappingSpeedTestScreen ui.screens.tapping_speed_test_screen
+
+
+<NavigationItem>
+    theme_text_color: 'Custom'
+    divider: None
+
+    IconLeftWidget:
+        icon: root.icon
+
+
+<ContentNavigationDrawer>
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        FloatLayout:
+            size_hint_y: None
+            height: "200dp"
+
+            canvas:
+                Color:
+                    rgb: 0, 0, 0
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                id: top_box
+                size_hint_y: None
+                size_hint_x: 1
+                height: "200dp"
+                #padding: "10dp"
+                x: root.parent.x
+                pos_hint: {"top": 1}
+
+                Image:
+                    size_hint_x: 1
+                    source: 'ui\img\morse_code_icon.png'
+
+            MDIconButton:
+                icon: "close-circle"
+                x: root.parent.x + dp(10)
+                pos_hint: {"top": 1}
+                on_release: root.parent.toggle_nav_drawer()
+
+        ScrollView:
+            pos_hint: {"top": 1}
+
+            GridLayout:
+                id: box_item
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+
+Screen:
+
+    NavigationLayout:
+
+        ScreenManager:
+            id: screen_manager
+
+            HomeScreen:
+                name: 'home'
+
+            TappingSpeedTestScreen:
+                name: 'tapspeed'
+
+            TrainingMenuScreen:
+                name: 'training'
+
+            DecoderScreen:
+                name: 'decode'
+
+            EncoderScreen:
+                name: 'encode'
+
+            ListeningScreen:
+                name: 'listening'
+
+            TappingScreen:
+                name: 'tapping'
+
+            CalibrationScreen:
+                name: 'calibration'
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                id: content_drawer

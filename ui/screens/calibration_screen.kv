@@ -1,0 +1,42 @@
+#: import AudAmpVisualizer ui.widgets.audio_amplitude_visualizer
+
+
+<CalibrationScreen>
+    MDCard:
+        id: calibration_card
+        padding: dp(6)
+        spacing: dp(6)
+        orientation: 'vertical'
+        size_hint: 0.75, 0.45
+        pos_hint: {'top': 0.75, 'center_x': 0.5}
+
+        MDLabel:
+            text: 'Calibrate Mic Sensitivity for Auto Morse Recognizer'
+            font_style: 'Body2'
+            halign: 'center'
+            theme_text_color: 'Custom'
+            text_color: 1, 1, 1, 1
+
+        AudAmpVisualizer:
+            id: amp_viz
+            orientation: "horizontal"
+            size_hint_y: 1
+            stack_count: 30
+            value: 15
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 2
+
+            Slider:
+                size_hint: 8, None
+                pos_hint: {'center_y': 0.5}
+                value: app.util.auto_morse_recognizer.active_threshold
+                on_value: root.on_slider_value_change(self.value)
+
+            MDLabel:
+                text: root.sensitivity_value_label
+                font_style: 'h3'
+                font_style: 'Caption'
+                theme_text_color: 'Custom'
+                text_color: 1, 1, 1, 1

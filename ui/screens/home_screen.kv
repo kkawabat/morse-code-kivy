@@ -1,0 +1,72 @@
+#:import MDCard kivymd.uix.card
+#:import MDToolbar kivymd.uix.toolbar
+#:import MDRectangleFlatIconButton kivymd.uix.button
+#:import MDLabel kivymd.uix.label
+#:import DefaultButton ui.widgets.default_button
+
+<HomeScreen>
+    FloatLayout:
+        size_hint: 0.9, 0.75
+        pos_hint: {'center_x': 0.5, 'center_y': 0.475}
+        canvas.before:
+            Color:
+                rgba:  [.3,.3,.3,.8]
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [dp(10)]
+
+        BoxLayout:
+            size_hint: .9, .9
+            orientation: 'vertical'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: dp(10)
+
+            AnchorLayout:
+                size_hint_x: 1
+                Image:
+                    source: 'ui\img\welcome_morse_code.png'
+                    allow_stretch: True
+                    keep_ratio: True
+
+            DefaultButton:
+                text: 'Speed Tapping Test'
+                icon: 'timer'
+                size_hint_x: 1
+                on_press:
+                    root.manager.current = 'tapspeed'
+
+            DefaultButton:
+                text: 'Train'
+                icon: 'dumbbell'
+                size_hint_x: 1
+                on_press:
+                    root.manager.current = 'training'
+
+            DefaultButton:
+                text: 'Translate Morse Code'
+                size_hint_x: 1
+                icon: 'text-to-speech'
+                on_press:
+                    root.manager.current = 'decode'
+
+            DefaultButton:
+                text: 'Text to Morse Code'
+                icon: 'comment-text'
+                size_hint_x: 1
+                on_press:
+                    root.manager.current = 'encode'
+
+            DefaultButton:
+                text: 'Calibrate'
+                icon: 'cogs'
+                size_hint_x: 1
+                on_press:
+                    root.manager.current = 'calibration'
+
+            DefaultButton:
+                text: 'Exit'
+                icon: 'exit-to-app'
+                size_hint_x: 1
+                on_press: app.stop()
+

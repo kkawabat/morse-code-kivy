@@ -1,13 +1,7 @@
-import json
-import os
-from threading import Thread
-
-from kivy.app import App
-from kivy.clock import Clock
-from kivy.utils import platform
-
-from .morse_helper import MorseHelper
-from auto_morse_recognizer.auto_morse_recognizer import AutoMorseRecognizer
+from util.mic_engine import AudioEngine
+from util.sound_engine import SoundEngine
+from .morse_engine import MorseEngine
+from util.auto_morse_recognizer import AutoMorseRecognizer
 
 training_prompt_dict = {
     'letter': list('abcdefghijklmnopqrstuvwxyz'),
@@ -42,13 +36,42 @@ training_prompt_dict = {
                  'turn shaker upside down']
 }
 
+mnemonic_dict = {'a': 'a-PART',
+                 'b': 'BOOT-to-the-head',
+                 'c': 'CO-co-CO-la',
+                 'd': 'DOCK-wor-ker',
+                 'e': 'eh',
+                 'f': 'for-the-FAIR-es',
+                 'g': 'GOOD-GRAV-y',
+                 'h': 'hi-pi-ty-hop',
+                 'i': 'aye-aye',
+                 'j': 'lets-JUMP-JUMP-JUMP',
+                 'k': 'KIN-ga-ROO',
+                 'l': 'to-HELL-with-it',
+                 'm': 'MMM-MMM',
+                 'n': 'NAV-y',
+                 'o': 'ONE-OF-US',
+                 'p': 'a-POO-PEE-smell',
+                 'q': 'GOD-SAVE-the-QUEEN',
+                 'r': 'ro-TA-tion',
+                 's': 'si-si-si',
+                 't': 'TALL',
+                 'u': 'un-der-WHERE',
+                 'v': 'du-du-du-DUUU (beethoven\'s V\'th Symphony',
+                 'w': 'a-WHITE-WHALE',
+                 'x': 'X-marks-the-SPOT',
+                 'y': 'YELL-ow-YO-YO',
+                 'z': 'ZINC-ZOO-kee-per'}
+
 
 class Utility(object):
     def __init__(self):
-        self.calibration = 17
-
-        # used in training screens
-        self.morse_helper = MorseHelper()
-        self.training_prompt_dict = training_prompt_dict
         self.training_difficulty = ''
-        self.auto_morse_recognizer = AutoMorseRecognizer(active_threshold=self.calibration, debug=True)
+        self.sound_engine = SoundEngine()
+        self.morse_helper = MorseEngine(self.sound_engine)
+
+        self.mic_engine = AudioEngine()
+        self.auto_morse_recognizer = AutoMorseRecognizer(self.mic_engine)
+
+        self.training_prompt_dict = training_prompt_dict
+        self.mnemonic_dict = mnemonic_dict

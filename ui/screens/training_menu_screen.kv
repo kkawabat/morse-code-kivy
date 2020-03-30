@@ -1,0 +1,109 @@
+# #:import AudioIndicator ui.widgets.audio_indicator.AudioIndicator
+#:import DefaultButton ui.widgets.default_button
+
+
+<TrainingMenuScreen>
+    BoxLayout:
+        size_hint: .8, .3
+        orientation: 'vertical'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+        canvas.before:
+            Color:
+                rgba: app.theme_cls.accent_color[:-1] + [.8]
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [dp(10)]
+
+        MDLabel:
+            text: 'Listening to Morse code'
+            font_style: 'H5'
+            halign: 'center'
+            theme_text_color: 'Custom'
+            text_color: 1, 1, 1, 1
+            size_hint_x: 1
+
+        BoxLayout:
+            pos_hint: {'center_x': 0.6}
+            orientation: 'horizontal'
+            spacing: dp(20)
+            padding: dp(20), dp(20), dp(20), dp(20)
+            size_hint_y: 2
+
+            DefaultButton:
+                text: 'letters'
+                icon: 'walk'
+                pos_hint: {'center_y': 0.7}
+                on_press:
+                    app.util.training_difficulty = "Easy"
+                    root.manager.current = 'listening'
+
+            DefaultButton:
+                text: 'words'
+                icon: 'run'
+                pos_hint: {'center_y': 0.7}
+                on_press:
+                    app.util.training_difficulty = "Medium"
+                    root.manager.current = 'listening'
+
+            DefaultButton:
+                text: 'sentences'
+                icon: 'bike'
+                pos_hint: {'center_y': 0.7}
+                on_press:
+                    app.util.training_difficulty = "Hard"
+                    root.manager.current = 'listening'
+
+    BoxLayout:
+        size_hint: .8, .3
+        orientation: 'vertical'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+
+        canvas.before:
+            Color:
+                rgba: app.theme_cls.accent_color[:-1] + [.8]
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [dp(10)]
+
+        MDLabel:
+            text: 'Tapping Morse Code'
+            font_style: 'H5'
+            halign: 'center'
+            theme_text_color: 'Custom'
+            text_color: 1, 1, 1, 1
+            size_hint_x: 1
+
+        BoxLayout:
+            pos_hint: {'center_x': 0.6}
+            orientation: 'horizontal'
+            spacing: dp(20)
+            padding: dp(20), dp(20), dp(20), dp(20)
+            size_hint_y: 2
+
+            DefaultButton:
+                pos_hint: {'center_y': 0.7}
+                text: 'letters'
+                icon: 'walk'
+                on_press:
+                    app.util.training_difficulty = "Easy"
+                    root.manager.current = 'tapping'
+
+            DefaultButton:
+                pos_hint: {'center_y': 0.7}
+                text: 'words'
+                icon: 'run'
+                on_press:
+                    app.util.training_difficulty = "Medium"
+                    root.manager.current = 'tapping'
+
+            DefaultButton:
+                pos_hint: {'center_y': 0.7}
+                text: 'sentences'
+                icon: 'bike'
+                on_press:
+                    app.util.training_difficulty = "Hard"
+                    root.manager.current = 'tapping'
+
